@@ -2,7 +2,7 @@
 {
     using System.ComponentModel.DataAnnotations;
 
-    public class Products
+    public class Product
     {
         [Key]
         public int Id { get; set; }

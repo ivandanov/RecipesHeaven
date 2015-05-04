@@ -5,23 +5,28 @@
 
     public class Recipe
     {
-        private ICollection<Products> products;
-        private ICollection<byte> rating;
+        private ICollection<Product> products;
+        private ICollection<byte> rating; 
         
         public Recipe()
         {
-            this.Products = new HashSet<Products>();
-            this.Rating = new HashSet<byte>();
+            this.Products = new HashSet<Product>();
+            this.Rating = new HashSet<byte>(); 
         }
 
         [Key]
         public int Id { get; set; }
 
+        [Required]
+        [StringLength(1000)]
+        public string PreparingSteps { get; set; }
+
         public virtual Image Image { get; set; }
 
         public virtual User Author { get; set; }
 
-        public virtual ICollection<Products> Products 
+        [Required]
+        public virtual ICollection<Product> Products 
         {
             get { return this.products; } 
             set { this.products = value; }

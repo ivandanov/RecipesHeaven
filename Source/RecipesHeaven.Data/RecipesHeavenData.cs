@@ -45,9 +45,9 @@
             get { return this.GetRepository<Recipe>(); }
         }
 
-        public IRepository<Products> Products
+        public IRepository<Product> Products
         {
-            get { return this.GetRepository<Products>(); }
+            get { return this.GetRepository<Product>(); }
         }
 
         public IRepository<User> Users

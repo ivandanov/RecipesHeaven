@@ -17,7 +17,7 @@
 
         IRepository<Recipe> Recipes { get; }
 
-        IRepository<Products> Products { get; }
+        IRepository<Product> Products { get; }
 
         IRepository<User> Users { get; }
 

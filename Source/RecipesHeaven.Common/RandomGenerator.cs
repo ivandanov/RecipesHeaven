@@ -5,9 +5,8 @@
 
     public class RandomGenerator : Random
     {
-        private const string DefaultCharacters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890";
-
-
+        private const string DefaultCharacters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ abcdefghijklmnopqrstuvwxyz1234567890";
+        
         public string RandomString(int minLength = 5, int maxLength = 50, string characters = DefaultCharacters)
         {
             var result = new StringBuilder();

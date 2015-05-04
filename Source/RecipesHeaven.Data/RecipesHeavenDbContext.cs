@@ -14,7 +14,7 @@
 
         public virtual IDbSet<Recipe> Recipes { get; set; }
 
-        public virtual IDbSet<Products> Products { get; set; }
+        public virtual IDbSet<Product> Products { get; set; }
 
         public virtual IDbSet<Comment> Comments { get; set; }
 
