@@ -19,6 +19,8 @@ namespace RecipesHeaven.Data.Migrations
         private const int DefaultNumberOfRecipse = 10;
         private const int DefaultNumberOfComments = 10;
         private const string DefaultRecipeImagesPath = "/Migrations/Images/Recipes";
+        private readonly string[] DefaultCategories = 
+            new string[] { "Salads", "Main Dishes", "Fish & Seafood", "Vegetarian", "Desserts", "Beverages" };
 
         private RandomGenerator random;
 
@@ -33,10 +35,11 @@ namespace RecipesHeaven.Data.Migrations
         {
             this.SeedUsers(DefaultNumberOfUsers, context);
             this.SeedProducts(DefaultNumberOfProducts, context);
+            this.SeedCategories(DefaultCategories, context);
             this.SeedRecipes(DefaultNumberOfRecipse, context);
             this.SeedComments(DefaultNumberOfComments, context);
         }
-
+  
         private void SeedUsers(int numberOfUsers, RecipesHeavenDbContext context)
         {
             if (context.Users.Any())
@@ -94,6 +97,26 @@ namespace RecipesHeaven.Data.Migrations
             context.SaveChanges();
         }
 
+        private void SeedCategories(IEnumerable<string> categoryNames, RecipesHeavenDbContext context)
+        {
+            if(context.Categories.Any())
+            {
+                return;
+            }
+
+            foreach (var catName in categoryNames)
+            {
+                var category = new Category()
+                {
+                    Name = catName
+                };
+
+                context.Categories.Add(category);
+            }
+
+            context.SaveChanges();
+        }
+
         private void SeedRecipes(int numberOfRecipes, RecipesHeavenDbContext context)
         {
             if (context.Recipes.Any())
@@ -103,11 +126,13 @@ namespace RecipesHeaven.Data.Migrations
 
             var someUsers = context.Users.Take(DefaultNumberOfUsers).ToList();
             var someProducts = context.Products.Take(DefaultNumberOfProducts).ToList();
+            var someCategories = context.Categories.Take(DefaultCategories.Length).ToList();
 
             for (int i = 0; i < DefaultNumberOfRecipse; i++)
             {
                 var recipe = new Recipe();
                 recipe.Author = someUsers[random.Next(0, someUsers.Count)];
+                recipe.Category = someCategories[random.Next(0, someCategories.Count)];
                 recipe.PreparingSteps = random.RandomString(20, 500);
                 recipe.Image = this.GetSampleImage(DefaultRecipeImagesPath);
 
@@ -128,12 +153,14 @@ namespace RecipesHeaven.Data.Migrations
             }
 
             var someUsers = context.Users.Take(DefaultNumberOfUsers).ToList();
-            
+            var someRecipes = context.Recipes.Take(DefaultNumberOfRecipse).ToList();
+
             for (int i = 0; i < DefaultNumberOfComments; i++)
             {
                 var comment = new Comment()
                 {
                     Author = someUsers[random.Next(0, someUsers.Count)],
+                    Recipe = someRecipes[random.Next(0, someRecipes.Count)],
                     Content = random.RandomString(20, 200)
                 };
 

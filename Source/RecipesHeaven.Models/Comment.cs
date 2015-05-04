@@ -11,5 +11,7 @@
         public virtual User Author { get; set; }
 
         public string Content { get; set; }
+
+        public virtual Recipe Recipe { get; set; }
     }
 }

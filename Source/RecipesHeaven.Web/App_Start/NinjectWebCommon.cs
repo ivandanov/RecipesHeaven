@@ -13,6 +13,8 @@ namespace RecipesHeaven.Web.App_Start
     using RecipesHeaven.Data.Contracts;
     using RecipesHeaven.Data;
     using System.Data.Entity;
+    using RecipesHeaven.Services.Contracts;
+    using RecipesHeaven.Services;
 
     public static class NinjectWebCommon 
     {
@@ -66,6 +68,10 @@ namespace RecipesHeaven.Web.App_Start
         {
             kernel.Bind<DbContext>().To<RecipesHeavenDbContext>();
             kernel.Bind<IRecipesHeavenData>().To<RecipesHeavenData>();
+
+            kernel.Bind<IProductsServices>().To<ProductsServices>();
+            kernel.Bind<IRecipesServices>().To<RecipesServices>();
+            kernel.Bind<ICategoriesServices>().To<CategoriesServices>();
         }        
     }
 }

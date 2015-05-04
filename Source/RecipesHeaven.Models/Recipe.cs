@@ -6,12 +6,14 @@
     public class Recipe
     {
         private ICollection<Product> products;
-        private ICollection<byte> rating; 
+        private ICollection<Comment> comments;
+        private ICollection<byte> rating;
         
         public Recipe()
         {
             this.Products = new HashSet<Product>();
-            this.Rating = new HashSet<byte>(); 
+            this.Rating = new HashSet<byte>();
+            this.Comments = new HashSet<Comment>(); 
         }
 
         [Key]
@@ -25,6 +27,8 @@
 
         public virtual User Author { get; set; }
 
+        public virtual Category Category { get; set; }
+
         [Required]
         public virtual ICollection<Product> Products 
         {
@@ -36,6 +40,12 @@
         {
             get { return this.rating; }
             set { this.rating = value; }
+        }
+
+        public virtual ICollection<Comment> Comments
+        {
+            get { return this.comments; }
+            set { this.comments = value; }
         }
     }
 }
