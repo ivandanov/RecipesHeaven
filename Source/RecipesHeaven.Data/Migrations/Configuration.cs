@@ -39,6 +39,8 @@ namespace RecipesHeaven.Data.Migrations
             {
                 return;
             }
+
+
         }
 
         private void SeedProducts(int numberOfProducts, RecipesHeavenDbContext context)
