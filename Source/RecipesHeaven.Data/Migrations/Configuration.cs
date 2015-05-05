@@ -135,6 +135,7 @@ namespace RecipesHeaven.Data.Migrations
                 recipe.Category = someCategories[random.Next(0, someCategories.Count)];
                 recipe.PreparingSteps = random.RandomString(20, 500);
                 recipe.Image = this.GetSampleImage(DefaultRecipeImagesPath);
+                recipe.DateAdded = DateTime.Now;
 
                 var numberOfProducts = random.Next(1, someProducts.Count);
                 recipe.Products = new List<Product>(someProducts.Take(numberOfProducts).ToList());

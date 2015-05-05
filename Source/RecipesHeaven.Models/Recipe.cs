@@ -1,9 +1,12 @@
 ﻿namespace RecipesHeaven.Models
 {
+    using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
 
-    public class Recipe
+    using RecipesHeaven.Models.Contracts;
+
+    public class Recipe : CreatableEntity, ICreatableEntity
     {
         private ICollection<Product> products;
         private ICollection<Comment> comments;
@@ -20,7 +23,7 @@
         public int Id { get; set; }
 
         [Required]
-        [StringLength(1000)]
+        [MaxLength(500)]
         public string PreparingSteps { get; set; }
 
         public virtual Image Image { get; set; }
@@ -28,6 +31,8 @@
         public virtual User Author { get; set; }
 
         public virtual Category Category { get; set; }
+
+        public virtual DateTime DateAdded { get; set; }
 
         [Required]
         public virtual ICollection<Product> Products 
