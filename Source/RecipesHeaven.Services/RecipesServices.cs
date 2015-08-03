@@ -18,6 +18,15 @@
         {
         }
 
+        public IQueryable<Recipe> GetNewestRecipes(int numberOfRecipes = 10)
+        {
+            return this.Data
+                .Recipes
+                .All()
+                .OrderByDescending(r => r.DateAdded)
+                .Take(numberOfRecipes);
+        }
+
         public IQueryable<Recipe> GetMostCommentedRecipes(int numberOfRecipes)
         {
             return this.Data
@@ -74,5 +83,6 @@
                 .All()
                 .Where(r => r.Category == category);
         }
+
     }
 }

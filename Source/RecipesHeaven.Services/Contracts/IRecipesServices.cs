@@ -9,6 +9,8 @@
 
     public interface IRecipesServices
     {
+        IQueryable<Recipe> GetNewestRecipes(int numberOfRecipes = 10);
+
         IQueryable<Recipe> GetMostCommentedRecipes(int numberOfRecipes);
 
         IQueryable<Recipe> GetMostRatedRecipes(int numberOfRecipes);

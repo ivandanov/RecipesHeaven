@@ -15,6 +15,8 @@
         [MaxLength(500)]
         public string Content { get; set; }
 
+        public int RecipeId { get; set; }
+
         public virtual Recipe Recipe { get; set; }
     }
 }

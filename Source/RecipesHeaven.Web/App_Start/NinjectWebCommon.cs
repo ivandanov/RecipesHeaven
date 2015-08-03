@@ -72,6 +72,8 @@ namespace RecipesHeaven.Web.App_Start
             kernel.Bind<IProductsServices>().To<ProductsServices>();
             kernel.Bind<IRecipesServices>().To<RecipesServices>();
             kernel.Bind<ICategoriesServices>().To<CategoriesServices>();
+            kernel.Bind<ICommentsServices>().To<CommentsServices>();
+            kernel.Bind<IUsersServices>().To<UsersServices>();
         }        
     }
 }

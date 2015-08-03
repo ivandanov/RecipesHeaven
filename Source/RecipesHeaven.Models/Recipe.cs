@@ -1,4 +1,6 @@
-﻿namespace RecipesHeaven.Models
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace RecipesHeaven.Models
 {
     using System;
     using System.Collections.Generic;
@@ -20,15 +22,27 @@
         }
 
         [Key]
+        [Column(Order = 0)]
         public int Id { get; set; }
+        
+        [MaxLength(50)]
+        public string Name { get; set; }
 
         [Required]
         [MaxLength(500)]
         public string PreparingSteps { get; set; }
 
+        [Key, ForeignKey("Image")]
+        [Column(Order = 1)]
+        public int? ImageId { get; set; }
+
         public virtual Image Image { get; set; }
 
+        public int AuthorId { get; set; }
+
         public virtual User Author { get; set; }
+
+        public int CategoryId { get; set; }
 
         public virtual Category Category { get; set; }
 
