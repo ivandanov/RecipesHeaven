@@ -60,28 +60,35 @@
                 .All()
                 .Where(r => r.Products.Contains(product));
         }
-        public IQueryable<Recipe> GetRecipesByProducts(IEnumerable<Product> products)
+        public IQueryable<Recipe> GetRecipesByProducts(int[] productsIds, int pageIndex = 0, int pageSize = int.MaxValue)
         {
             //check certain recipe contains all given products
-            Expression<Func<Recipe, bool>> containsAllProductsInRecipe = 
-                r => r.Products.Intersect(r.Products).Count() == products.Count();
+            //slower aproach:
+            //Expression<Func<Recipe, bool>> containsAllProductsInRecipe2 =
+            //    recipe => productsIds.All(p => recipe.Products.Select(pr => pr.Id).Contains(p));
 
-            //other approach (slower)
-            //Expression<Func<Recipe, bool>> containsAllProductsInRecipe =
-            //    r => products.All(p => r.Products.Contains(p));
+            Expression<Func<Recipe, bool>> containsAllProductsInRecipe =
+                recipe => recipe.Products
+                    .Select(pr => pr.Id)
+                    .Intersect(productsIds)
+                    .Count() == productsIds.Length;
 
             return this.Data
                 .Recipes
                 .All()
-                .Where(containsAllProductsInRecipe);
+                .Where(containsAllProductsInRecipe)
+                .Skip(pageIndex * pageSize)
+                .Take(pageSize);
         }
 
-        public IQueryable<Recipe> GetRecipesByCategory(Category category)
+        public IQueryable<Recipe> GetRecipesByCategory(int id, int pageIndex = 0, int pageSize = int.MaxValue)
         {
             return this.Data
                 .Recipes
                 .All()
-                .Where(r => r.Category == category);
+                .Where(r => r.Category.Id == id)
+                .Skip(pageIndex * pageSize)
+                .Take(pageSize);
         }
 
     }

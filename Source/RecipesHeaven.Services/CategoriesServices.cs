@@ -13,6 +13,13 @@
         {
         }
 
+        public IQueryable<Category> GetAllCategories()
+        {
+            return this.Data
+                .Categories
+                .All();
+        }
+
         public IQueryable<Category> GetCategoryByRecipe(Recipe recipe)
         {
             return this.Data

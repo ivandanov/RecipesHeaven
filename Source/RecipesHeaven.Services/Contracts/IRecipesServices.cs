@@ -19,8 +19,8 @@
 
         IQueryable<Recipe> GetRecipesByProduct(Product product);
 
-        IQueryable<Recipe> GetRecipesByProducts(IEnumerable<Product> products);
+        IQueryable<Recipe> GetRecipesByProducts(int[] productsIds, int pageIndex, int pageSize);
 
-        IQueryable<Recipe> GetRecipesByCategory(Category category);
+        IQueryable<Recipe> GetRecipesByCategory(int id, int pageIndex, int pageSize);
     }
 }

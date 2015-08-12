@@ -1,0 +1,14 @@
+﻿@model IEnumerable<RecipesHeaven.Web.ViewModels.Category.CategoryViewModel>
+<div class="col-md-3">
+    <p class="lead">Categories</p>
+    <div class="list-group">
+        @foreach (var cat in Model)
+        {
+            <a href="@Url.RouteUrl("Category", new { Id = cat.Id })" class="list-group-item">@cat.Name 
+                <span class="pull-right">@cat.NumberRecipes</span></a>
+        }
+    </div>
+</div>
+@* <div class="span6 pull-right" style="text-align:right">
+         <p>text right</p>
+    </div> *@

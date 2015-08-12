@@ -6,6 +6,8 @@
 
     public interface ICategoriesServices
     {
+        IQueryable<Category> GetAllCategories();
+
         IQueryable<Category> GetCategoryByRecipe(Recipe recipe);
 
         IQueryable<Category> GetMostRecipesCategory(int numberOfCategories);
