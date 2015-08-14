@@ -66,7 +66,8 @@ namespace RecipesHeaven.Web.App_Start
         /// <param name="kernel">The kernel.</param>
         private static void RegisterServices(IKernel kernel)
         {
-            kernel.Bind<DbContext>().To<RecipesHeavenDbContext>();
+            kernel.Bind<DbContext>().To<RecipesHeavenDbContext>().InSingletonScope();
+            
             kernel.Bind<IRecipesHeavenData>().To<RecipesHeavenData>();
 
             kernel.Bind<IProductsServices>().To<ProductsServices>();

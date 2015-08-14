@@ -25,10 +25,10 @@ namespace RecipesHeaven.Web.Controllers
         }
 
         // GET: Category
-        public ActionResult CategoryRecipes(int id, int pageIndex = 1, int pageSize = 10)
+        public ActionResult CategoryRecipes(int id, int pageIndex = 0, int pageSize = 10)
         {
             var recipesInCategory = recipeService.GetRecipesByCategory(id, pageIndex, pageSize)
-                .Project().To<RecipeViewModel>();
+                .Project().To<RecipeOverviewModel>().ToList();
 
             return View(recipesInCategory);
         }
@@ -36,7 +36,7 @@ namespace RecipesHeaven.Web.Controllers
         public ActionResult GetCategories()
         {
             var categories = categoryService.GetAllCategories()
-                .Project().To<CategoryViewModel>();
+                .Project().To<CategoryViewModel>().ToList();
 
             return PartialView("_Categories", categories);
         }

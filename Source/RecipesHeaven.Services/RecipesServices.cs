@@ -77,6 +77,7 @@
                 .Recipes
                 .All()
                 .Where(containsAllProductsInRecipe)
+                .OrderByDescending(r => r.Rating.Average(a => a / r.Rating.Count))
                 .Skip(pageIndex * pageSize)
                 .Take(pageSize);
         }
@@ -86,7 +87,8 @@
             return this.Data
                 .Recipes
                 .All()
-                .Where(r => r.Category.Id == id)
+                .Where(r => r.CategoryId == id)
+                .OrderByDescending(r => r.DateAdded)
                 .Skip(pageIndex * pageSize)
                 .Take(pageSize);
         }

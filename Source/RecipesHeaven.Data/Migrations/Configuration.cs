@@ -132,7 +132,7 @@ namespace RecipesHeaven.Data.Migrations
             {
                 var recipe = new Recipe()
                 {
-                    Name = random.RandomString(10, 50),
+                    Name = random.RandomString(10, 49),
                     Author = someUsers[random.Next(0, someUsers.Count)],
                     Category = someCategories[random.Next(0, someCategories.Count)],
                     PreparingSteps = random.RandomString(20, 500),
