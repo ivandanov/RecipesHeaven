@@ -3,13 +3,16 @@
     using System.Linq;
 
     using RecipesHeaven.Models;
+    using System.Collections.Generic;
 
     public interface ICategoriesServices
     {
-        IQueryable<Category> GetAllCategories();
+        Category GetCategoryById(int id);
 
-        IQueryable<Category> GetCategoryByRecipe(Recipe recipe);
+        IList<Category> GetAllCategories();
 
-        IQueryable<Category> GetMostRecipesCategory(int numberOfCategories);
+        IList<Category> GetCategoryByRecipe(Recipe recipe);
+
+        IList<Category> GetMostRecipesCategory(int numberOfCategories);
     }
 }

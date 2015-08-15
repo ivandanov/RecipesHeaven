@@ -6,11 +6,12 @@ namespace RecipesHeaven.Web.Controllers
     using System.Web.Mvc;
 
     using AutoMapper.QueryableExtensions;
-    
+
     using RecipesHeaven.Data.Contracts;
     using RecipesHeaven.Services.Contracts;
     using RecipesHeaven.Web.ViewModels.Home;
-    
+    using RecipesHeaven.Web.ViewModels.Recipe;
+
     public class HomeController : BaseController
     {
         private readonly IRecipesServices recipeServices;
@@ -23,10 +24,13 @@ namespace RecipesHeaven.Web.Controllers
 
         public ActionResult Index()
         {
-            var model = recipeServices
+            var model = new IndexViewModel();
+
+            model.NewestRecipes = recipeServices
                 .GetNewestRecipes()
+                .AsQueryable()
                 .Project()
-                .To<IndexRecipesViewModel>()
+                .To<RecipeOverviewModel>()
                 .ToList();
 
             return View(model);

@@ -5,6 +5,7 @@
     using RecipesHeaven.Models;
     using RecipesHeaven.Data.Contracts;
     using RecipesHeaven.Services.Contracts;
+    using System.Collections.Generic;
 
     public class CategoriesServices : BaseService, ICategoriesServices
     {
@@ -13,27 +14,35 @@
         {
         }
 
-        public IQueryable<Category> GetAllCategories()
+        public Category GetCategoryById(int id)
         {
-            return this.Data
-                .Categories
-                .All();
+            return this.Data.Categories.GetById(id);
         }
 
-        public IQueryable<Category> GetCategoryByRecipe(Recipe recipe)
+        public IList<Category> GetAllCategories()
         {
             return this.Data
                 .Categories
                 .All()
-                .Where(c => c.Recipes.Contains(recipe));
+                .ToList();
         }
 
-        public IQueryable<Category> GetMostRecipesCategory(int numberOfCategories)
+        public IList<Category> GetCategoryByRecipe(Recipe recipe)
         {
             return this.Data
                 .Categories
                 .All()
-                .OrderByDescending(c => c.Recipes.Count);
+                .Where(c => c.Recipes.Contains(recipe))
+                .ToList();
+        }
+
+        public IList<Category> GetMostRecipesCategory(int numberOfCategories)
+        {
+            return this.Data
+                .Categories
+                .All()
+                .OrderByDescending(c => c.Recipes.Count)
+                .ToList();
         }
     }
 }

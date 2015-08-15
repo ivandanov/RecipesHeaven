@@ -18,49 +18,54 @@
         {
         }
 
-        public IQueryable<Recipe> GetNewestRecipes(int numberOfRecipes = 10)
+        public IList<Recipe> GetNewestRecipes(int numberOfRecipes = 10)
         {
             return this.Data
                 .Recipes
                 .All()
                 .OrderByDescending(r => r.DateAdded)
-                .Take(numberOfRecipes);
+                .Take(numberOfRecipes)
+                .ToList();
         }
 
-        public IQueryable<Recipe> GetMostCommentedRecipes(int numberOfRecipes)
+        public IList<Recipe> GetMostCommentedRecipes(int numberOfRecipes)
         {
             return this.Data
                 .Recipes
                 .All()
                 .OrderByDescending(r => r.Comments.Count)
-                .Take(numberOfRecipes);
+                .Take(numberOfRecipes)
+                .ToList();
         }
 
-        public IQueryable<Recipe> GetMostRatedRecipes(int numberOfRecipes)
+        public IList<Recipe> GetMostRatedRecipes(int numberOfRecipes)
         {
             return this.Data
                 .Recipes
                 .All()
                 .OrderByDescending(r => r.Rating.Average(a => a / r.Rating.Count))
-                .Take(numberOfRecipes);
+                .Take(numberOfRecipes)
+                .ToList();
         }
 
-        public IQueryable<Recipe> GetRecipesFromUser(IUser user)
+        public IList<Recipe> GetRecipesFromUser(IUser user)
         {
             return this.Data
                 .Recipes
                 .All()
-                .Where(r => r.Author == user);
+                .Where(r => r.Author == user)
+                .ToList();
         }
-        
-        public IQueryable<Recipe> GetRecipesByProduct(Product product)
+
+        public IList<Recipe> GetRecipesByProduct(Product product)
         {
             return this.Data
                 .Recipes
                 .All()
-                .Where(r => r.Products.Contains(product));
+                .Where(r => r.Products.Contains(product))
+                .ToList();
         }
-        public IQueryable<Recipe> GetRecipesByProducts(int[] productsIds, int pageIndex = 0, int pageSize = int.MaxValue)
+        public IList<Recipe> GetRecipesByProducts(int[] productsIds, int pageIndex = 0, int pageSize = int.MaxValue)
         {
             //check certain recipe contains all given products
             //slower aproach:
@@ -79,18 +84,22 @@
                 .Where(containsAllProductsInRecipe)
                 .OrderByDescending(r => r.Rating.Average(a => a / r.Rating.Count))
                 .Skip(pageIndex * pageSize)
-                .Take(pageSize);
+                .Take(pageSize)
+                .ToList();
         }
 
-        public IQueryable<Recipe> GetRecipesByCategory(int id, int pageIndex = 0, int pageSize = int.MaxValue)
+        public IList<Recipe> GetRecipesByCategory(int id, int pageIndex = 0, int pageSize = int.MaxValue)
         {
-            return this.Data
+            var a = this.Data
                 .Recipes
                 .All()
                 .Where(r => r.CategoryId == id)
                 .OrderByDescending(r => r.DateAdded)
                 .Skip(pageIndex * pageSize)
-                .Take(pageSize);
+                .Take(pageSize)
+                .ToList();
+
+            return a;
         }
 
     }

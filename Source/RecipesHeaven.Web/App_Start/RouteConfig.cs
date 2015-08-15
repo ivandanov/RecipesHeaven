@@ -16,7 +16,7 @@ namespace RecipesHeaven.Web
             routes.MapRoute(
                 name: "Category",
                 url: "Category/{id}",
-                defaults: new { controller = "Category", action = "CategoryRecipes", id = UrlParameter.Optional }
+                defaults: new { controller = "Category", action = "Category", id = UrlParameter.Optional }
             );
 
             routes.MapRoute(

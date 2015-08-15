@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using RecipesHeaven.Web.ViewModels.Category;
 using RecipesHeaven.Web.ViewModels.Recipe;
@@ -25,18 +26,23 @@ namespace RecipesHeaven.Web.Controllers
         }
 
         // GET: Category
-        public ActionResult CategoryRecipes(int id, int pageIndex = 0, int pageSize = 10)
+        public ActionResult Category(int id, int pageIndex = 0, int pageSize = 10)
         {
-            var recipesInCategory = recipeService.GetRecipesByCategory(id, pageIndex, pageSize)
-                .Project().To<RecipeOverviewModel>().ToList();
+            var model = new CategoryViewModel();
+            var sourceCat = categoryService.GetCategoryById(id);
 
-            return View(recipesInCategory);
+            model = Mapper.Map<Models.Category, CategoryViewModel>(sourceCat);            
+
+            return View(model);
         }
 
         public ActionResult GetCategories()
         {
             var categories = categoryService.GetAllCategories()
-                .Project().To<CategoryViewModel>().ToList();
+                .AsQueryable()
+                .Project()
+                .To<CategoryViewModel>()
+                .ToList();
 
             return PartialView("_Categories", categories);
         }

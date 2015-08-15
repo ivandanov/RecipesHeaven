@@ -300,7 +300,7 @@
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Category\_Categories.cshtml" />
-    <Content Include="Views\Category\CategoryRecipes.cshtml" />
+    <Content Include="Views\Category\Category.cshtml" />
     <Content Include="Views\Shared\_RecipeBox.cshtml" />
   </ItemGroup>
   <ItemGroup>

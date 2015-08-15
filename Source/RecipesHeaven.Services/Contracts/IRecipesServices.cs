@@ -9,18 +9,18 @@
 
     public interface IRecipesServices
     {
-        IQueryable<Recipe> GetNewestRecipes(int numberOfRecipes = 10);
+        IList<Recipe> GetNewestRecipes(int numberOfRecipes = 10);
 
-        IQueryable<Recipe> GetMostCommentedRecipes(int numberOfRecipes);
+        IList<Recipe> GetMostCommentedRecipes(int numberOfRecipes);
 
-        IQueryable<Recipe> GetMostRatedRecipes(int numberOfRecipes);
+        IList<Recipe> GetMostRatedRecipes(int numberOfRecipes);
 
-        IQueryable<Recipe> GetRecipesFromUser(IUser user);
+        IList<Recipe> GetRecipesFromUser(IUser user);
 
-        IQueryable<Recipe> GetRecipesByProduct(Product product);
+        IList<Recipe> GetRecipesByProduct(Product product);
 
-        IQueryable<Recipe> GetRecipesByProducts(int[] productsIds, int pageIndex, int pageSize);
+        IList<Recipe> GetRecipesByProducts(int[] productsIds, int pageIndex, int pageSize);
 
-        IQueryable<Recipe> GetRecipesByCategory(int id, int pageIndex, int pageSize);
+        IList<Recipe> GetRecipesByCategory(int id, int pageIndex, int pageSize);
     }
 }

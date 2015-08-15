@@ -1,29 +1,23 @@
 ﻿namespace RecipesHeaven.Web.ViewModels.Home
 {
+    using System.Collections.Generic;
+
     using AutoMapper;
+
     using RecipesHeaven.Models;
     using RecipesHeaven.Web.Infrastructure.Mapping;
+    using RecipesHeaven.Web.ViewModels.Recipe;
 
-    public class IndexRecipesViewModel : IMapFrom<Recipe>, IHaveCustomMappings
+    public class IndexViewModel 
     {
-        public int Id { get; set; }
-
-        public string Name { get; set; }
-
-        public string AuthorName { get; set; }
-
-        public string Category { get; set; }
-
-        public int NumberOfComments { get; set; }
-
-        public int? ImageId { get; set; }
-
-        public void CreateMappings(IConfiguration configuration)
+        public IndexViewModel()
         {
-            configuration.CreateMap<Recipe, IndexRecipesViewModel>()
-                .ForMember(vm => vm.Category, op => op.MapFrom(r => r.Category.Name))
-                .ForMember(vm => vm.NumberOfComments, op => op.MapFrom(r => r.Comments.Count))
-                .ForMember(vm => vm.AuthorName, op => op.MapFrom(r => r.Author.UserName));
+            this.CarouselRecipes = new List<RecipeOverviewModel>();
+            this.NewestRecipes = new List<RecipeOverviewModel>();
         }
+
+        public IList<RecipeOverviewModel> CarouselRecipes { get; set; }
+
+        public IList<RecipeOverviewModel> NewestRecipes { get; set; }
     }
 }

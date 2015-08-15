@@ -1,11 +1,11 @@
-﻿@model IList<RecipesHeaven.Web.ViewModels.Home.IndexRecipesViewModel>
+﻿@model RecipesHeaven.Web.ViewModels.Home.IndexViewModel
 @{
     ViewBag.Title = "Recipes heaven";
 }
 <h1>Recipes Heaven</h1>
 
 <div class="container">
-    @Html.Action("GetCategories", "Category") 
+    @{Html.RenderAction("GetCategories", "Category");}
            <div class="col-md-9">
             <div class="row carousel-holder">
                 <div class="col-md-12">
