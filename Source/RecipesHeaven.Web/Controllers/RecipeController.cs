@@ -15,7 +15,7 @@ namespace RecipesHeaven.Web.Controllers
 
         }
         // GET: Recipe
-        public ActionResult Index()
+        public ActionResult Recipe(int id)
         {
             return View();
         }
