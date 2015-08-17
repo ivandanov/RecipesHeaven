@@ -9,6 +9,7 @@ using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using RecipesHeaven.Web.ViewModels.Category;
 using RecipesHeaven.Web.ViewModels.Recipe;
+using RecipesHeaven.Models;
 
 namespace RecipesHeaven.Web.Controllers
 {
@@ -28,10 +29,10 @@ namespace RecipesHeaven.Web.Controllers
         // GET: Category
         public ActionResult Category(int id, int pageIndex = 0, int pageSize = 10)
         {
-            var model = new CategoryViewModel();
+            //var model = new CategoryViewModel();
             var sourceCat = categoryService.GetCategoryById(id);
 
-            model = Mapper.Map<Models.Category, CategoryViewModel>(sourceCat);            
+            var model = Mapper.Map<Category, CategoryViewModel>(sourceCat);            
 
             return View(model);
         }
