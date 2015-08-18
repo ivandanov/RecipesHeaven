@@ -29,7 +29,6 @@ namespace RecipesHeaven.Web.Controllers
         // GET: Category
         public ActionResult Category(int id, int pageIndex = 0, int pageSize = 10)
         {
-            //var model = new CategoryViewModel();
             var sourceCat = categoryService.GetCategoryById(id);
 
             var model = Mapper.Map<Category, CategoryViewModel>(sourceCat);            
