@@ -86,9 +86,7 @@ namespace RecipesHeaven.Data.Migrations
             {
                 var product = new Product()
                 {
-                    Name = random.RandomString(5, 10),
-                    Quantity = random.Next(),
-                    QyantitiType = (QuantityType)quantitiTypes.GetValue(random.Next(quantitiTypes.Length))
+                    Content = random.RandomString(5, 10)
                 };
 
                 context.Products.Add(product);

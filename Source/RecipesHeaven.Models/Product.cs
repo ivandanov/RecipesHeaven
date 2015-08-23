@@ -16,11 +16,10 @@ using System.ComponentModel.DataAnnotations;
         public int Id { get; set; }
 
         [MaxLength(50)]
-        public string Name { get; set; }
+        public string Content { get; set; }
 
-        public int Quantity { get; set; }
-
-        public virtual QuantityType QyantitiType { get; set; }
+        //TODO: entities for categorising product in recipe 
+        //e.g. "before baking" or "before presenting"
 
         public virtual ICollection<Recipe> Recipes
         {

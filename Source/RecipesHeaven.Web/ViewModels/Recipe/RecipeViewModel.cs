@@ -6,6 +6,7 @@
     using AutoMapper;
 
     using RecipesHeaven.Web.Infrastructure.Mapping;
+    using RecipesHeaven.Web.ViewModels.Product;
 
     public class RecipeViewModel : IMapFrom<Models.Recipe>, IHaveCustomMappings
     {
@@ -27,7 +28,11 @@
 
         public ICollection<RecipeCommentViewModel> Comments { get; set; }
 
+        public virtual ICollection<ProductViewModel> Products { get; set; }
+
         public string ImageUrl { get; set; }
+
+        public string PreparingSteps { get; set; }
 
         public void CreateMappings(IConfiguration configuration)
         {

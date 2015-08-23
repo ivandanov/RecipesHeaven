@@ -34,8 +34,8 @@
             return this.Data
                 .Products
                 .All()
-                .Where(p => p.Name.Contains(name))
-                .OrderBy(p => p.Name.Length);
+                .Where(p => p.Content.Contains(name))
+                .OrderBy(p => p.Content.Length);
         }
     }
 }
