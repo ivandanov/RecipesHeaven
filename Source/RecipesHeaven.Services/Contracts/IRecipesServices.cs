@@ -9,6 +9,8 @@
 
     public interface IRecipesServices
     {
+        Recipe GetRecipeById(int id);
+
         IList<Recipe> GetNewestRecipes(int numberOfRecipes = 10);
 
         IList<Recipe> GetMostCommentedRecipes(int numberOfRecipes);

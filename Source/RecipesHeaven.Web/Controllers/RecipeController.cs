@@ -1,23 +1,33 @@
-﻿using RecipesHeaven.Data.Contracts;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
-
-namespace RecipesHeaven.Web.Controllers
+﻿namespace RecipesHeaven.Web.Controllers
 {
+    using System.Web.Mvc;
+    using AutoMapper;
+    using RecipesHeaven.Data.Contracts;
+    using RecipesHeaven.Services.Contracts;
+    using RecipesHeaven.Web.ViewModels.Recipe;
+
     public class RecipeController : BaseController
     {
-        public RecipeController(IRecipesHeavenData data)
+        private IRecipesServices recipeService;
+
+        public RecipeController(IRecipesHeavenData data, IRecipesServices recipeService)
             : base(data)
         {
-
+            this.recipeService = recipeService;
         }
-        // GET: Recipe
+        
         public ActionResult Recipe(int id)
         {
-            return View();
+            var recipe = recipeService.GetRecipeById(id);
+
+            if (recipe == null)
+            {
+                return HttpNotFound();
+            }
+
+            var recipeModel = Mapper.Map<RecipeViewModel>(recipe);
+
+            return View("RecipeDetails", recipeModel);
         }
     }
 }

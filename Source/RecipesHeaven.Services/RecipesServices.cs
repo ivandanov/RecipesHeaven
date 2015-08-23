@@ -18,6 +18,11 @@
         {
         }
 
+        public Recipe GetRecipeById(int id)
+        {
+            return this.Data.Recipes.GetById(id);
+        }
+
         public IList<Recipe> GetNewestRecipes(int numberOfRecipes = 10)
         {
             return this.Data
@@ -65,12 +70,18 @@
                 .Where(r => r.Products.Contains(product))
                 .ToList();
         }
+
         public IList<Recipe> GetRecipesByProducts(int[] productsIds, int pageIndex = 0, int pageSize = int.MaxValue)
         {
             //check certain recipe contains all given products
             //slower aproach:
             //Expression<Func<Recipe, bool>> containsAllProductsInRecipe2 =
             //    recipe => productsIds.All(p => recipe.Products.Select(pr => pr.Id).Contains(p));
+
+            var query = from recipes in this.Data.Recipes.All()
+                        where productsIds.All(id => 
+                            recipes.Products.Select(pr => pr.Id).Contains(id))
+                        select recipes;
 
             Expression<Func<Recipe, bool>> containsAllProductsInRecipe =
                 recipe => recipe.Products
