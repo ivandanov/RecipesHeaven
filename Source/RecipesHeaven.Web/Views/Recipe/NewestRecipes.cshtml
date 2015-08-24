@@ -1,0 +1,9 @@
+﻿@model IEnumerable<RecipeOverviewModel>
+@using RecipesHeaven.Web.ViewModels.Recipe;
+
+<div class="row">
+    @foreach(var recipe in Model)
+    {
+        Html.RenderPartial("_RecipeBox", recipe);
+    }
+</div>

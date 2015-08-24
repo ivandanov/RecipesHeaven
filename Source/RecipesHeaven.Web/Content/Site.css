@@ -22,3 +22,17 @@ select,
 textarea {
     max-width: 280px;
 }
+
+.recipe-name {
+    text-align: center;
+    font-weight: bold;
+    overflow: hidden;
+    -ms-text-overflow: ellipsis;
+    -o-text-overflow: ellipsis;
+    text-overflow: ellipsis;
+    display: block;
+}
+
+.comments-number {
+    margin-bottom: 0;
+}
