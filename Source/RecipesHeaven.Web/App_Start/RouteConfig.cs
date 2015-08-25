@@ -16,13 +16,15 @@ namespace RecipesHeaven.Web
             routes.MapRoute(
                 name: "Category",
                 url: "Category/{id}",
-                defaults: new { controller = "Category", action = "Category", id = UrlParameter.Optional }
+                defaults: new { controller = "Category", action = "Category", id = UrlParameter.Optional },
+                constraints: new { id = @"\d+" }
             );
 
             routes.MapRoute(
                 name: "Recipe",
                 url: "Recipe/{id}",
-                defaults: new { controller = "Recipe", action = "Recipe", id = UrlParameter.Optional }
+                defaults: new { controller = "Recipe", action = "Recipe", id = UrlParameter.Optional },
+                constraints: new { id = @"\d+" }
             );
 
             routes.MapRoute(

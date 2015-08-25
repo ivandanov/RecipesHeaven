@@ -8,13 +8,11 @@ using System.Web;
 
 namespace RecipesHeaven.Web.ViewModels.Recipe
 {
-    public class RecipeOverviewModel : IMapFrom<Models.Recipe>, IHaveCustomMappings
+    public class RecipeOverviewModel : BaseViewModel, IMapFrom<Models.Recipe>, IHaveCustomMappings
     {
         public int Id { get; set; }
 
         public string Name { get; set; }
-
-        public string Description { get; set; }
 
         public int NumberOfComments { get; set; }
 
@@ -22,15 +20,13 @@ namespace RecipesHeaven.Web.ViewModels.Recipe
 
         public void CreateMappings(IConfiguration configuration)
         {
-            Expression<Func<Models.Recipe, string>> shortDesc =
-                r => r.PreparingSteps
-                    .Substring(0, r.PreparingSteps.Substring(0, 70).LastIndexOf(' ')) 
-                    + "...";
+            //Expression<Func<Models.Recipe, string>> shortDesc =
+            //    r => r.PreparingSteps
+            //        .Substring(0, r.PreparingSteps.Substring(0, 70).LastIndexOf(' ')) 
+            //        + "...";
             
             configuration.CreateMap<Models.Recipe, RecipeOverviewModel>()
-                .ForMember(vm => vm.NumberOfComments, op => op.MapFrom(shortDesc))
                 .ForMember(vm => vm.NumberOfComments, op => op.MapFrom(r => r.Comments.Count));
         }
-
     }
 }

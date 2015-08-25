@@ -19,6 +19,11 @@
             return this.Data.Categories.GetById(id);
         }
 
+        public Category GetCategoryByName(string name)
+        {
+            return this.Data.Categories.All().FirstOrDefault(c => c.Name == name);
+        }
+
         public IList<Category> GetAllCategories()
         {
             return this.Data

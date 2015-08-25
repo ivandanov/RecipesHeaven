@@ -24,16 +24,19 @@ namespace RecipesHeaven.Web.Controllers
 
         public ActionResult Index()
         {
-            var model = new IndexViewModel();
+            //var test = System.Web.Mvc.DependencyResolver.Current.GetService<ICategoriesServices>();
+            //var result = test.GetAllCategories().Select(c => c.Name);
 
-            model.NewestRecipes = recipeServices
-                .GetNewestRecipes()
-                .AsQueryable()
-                .Project()
-                .To<RecipeOverviewModel>()
-                .ToList();
+            //var model = new IndexViewModel();
 
-            return View(model);
+            //model.NewestRecipes = recipeServices
+            //    .GetNewestRecipes()
+            //    .AsQueryable()
+            //    .Project()
+            //    .To<RecipeOverviewModel>()
+            //    .ToList();
+
+            return View();
         }
 
         public ActionResult GetImage(int id)

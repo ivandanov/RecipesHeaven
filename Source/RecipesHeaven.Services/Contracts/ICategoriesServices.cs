@@ -9,9 +9,9 @@
     {
         Category GetCategoryById(int id);
 
-        IList<Category> GetAllCategories();
+        Category GetCategoryByName(string name);
 
-        IList<Category> GetCategoryByRecipe(Recipe recipe);
+        IList<Category> GetAllCategories();
 
         IList<Category> GetMostRecipesCategory(int numberOfCategories);
     }

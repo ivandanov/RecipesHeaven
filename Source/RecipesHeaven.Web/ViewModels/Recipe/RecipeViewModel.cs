@@ -8,7 +8,7 @@
     using RecipesHeaven.Web.Infrastructure.Mapping;
     using RecipesHeaven.Web.ViewModels.Product;
 
-    public class RecipeViewModel : IMapFrom<Models.Recipe>, IHaveCustomMappings
+    public class RecipeViewModel : BaseViewModel, IMapFrom<Models.Recipe>, IHaveCustomMappings
     {
         public int Id { get; set; }
 

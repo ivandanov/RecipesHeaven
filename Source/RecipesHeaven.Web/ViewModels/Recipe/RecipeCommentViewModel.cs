@@ -3,7 +3,7 @@
     using AutoMapper;
     using RecipesHeaven.Web.Infrastructure.Mapping;
 
-    public class RecipeCommentViewModel : IMapFrom<Models.Comment>, IHaveCustomMappings
+    public class RecipeCommentViewModel : BaseViewModel, IMapFrom<Models.Comment>, IHaveCustomMappings
     {
         public int Id { get; set; }
 

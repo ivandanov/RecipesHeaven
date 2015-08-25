@@ -10,12 +10,16 @@
     using RecipesHeaven.Models;
     using System.Linq.Expressions;
     using System;
+    using System.Data.Entity.Core;
 
     public class RecipesServices : BaseService, IRecipesServices
     {
-        public RecipesServices(IRecipesHeavenData data)
+        private ICategoriesServices categoryServices;
+
+        public RecipesServices(IRecipesHeavenData data, ICategoriesServices categoryServices)
             : base(data)
         {
+            this.categoryServices = categoryServices;
         }
 
         public Recipe GetRecipeById(int id)
@@ -31,6 +35,27 @@
                 .OrderByDescending(r => r.DateAdded)
                 .Take(numberOfRecipes)
                 .ToList();
+        }
+
+        public Recipe Create(string name, User author, string category, string preparingSteps, string imgUrl)
+        {
+            var categoryEntity = categoryServices.GetCategoryByName(category);
+            if(categoryEntity == null)
+            {
+                throw new ObjectNotFoundException(string.Format("\"{0}\" category doesn't exist", category));
+            }
+
+            //var recipe = new Recipe()
+            //{
+            //    Name = random.RandomString(10, 49),
+            //    Author = someUsers[random.Next(0, someUsers.Count)],
+            //    Category = someCategories[random.Next(0, someCategories.Count)],
+            //    PreparingSteps = random.RandomString(20, 500),
+            //    Image = this.GetSampleImage(DefaultRecipeImagesPath),
+            //    DateAdded = DateTime.Now
+            //};
+
+            return null;
         }
 
         public IList<Recipe> GetMostCommentedRecipes(int numberOfRecipes)
