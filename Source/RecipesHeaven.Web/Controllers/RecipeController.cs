@@ -8,6 +8,7 @@
     using RecipesHeaven.Services.Contracts;
     using RecipesHeaven.Web.ViewModels.Recipe;
     using System.Net;
+    using System.Collections.Generic;
 
     public class RecipeController : BaseController
     {
@@ -19,7 +20,7 @@
         {
             this.recipeService = recipeService;
         }
-        
+
         public ActionResult Recipe(int id)
         {
             var recipe = recipeService.GetRecipeById(id);
@@ -36,7 +37,10 @@
 
         public ActionResult Create()
         {
-            return View(new NewRecipeViewModel());
+            var model = new NewRecipeViewModel();
+            model.PossibleCategories = this.GetPosibleCategories();
+            
+            return View(model);
         }
 
         [HttpPost]
@@ -44,32 +48,45 @@
         [ValidateAntiForgeryToken]
         public ActionResult Create(NewRecipeViewModel model)
         {
-            if(model == null)
+            if (model == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            if(!ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
+                //categories for dropdown list
+                model.PossibleCategories = GetPosibleCategories();
                 return View(model);
             }
 
 
 
-            return View();
+            return RedirectToAction("Recipe", new { id = 1 });
         }
+
 
         public ActionResult MyRecipes()
         {
             return HttpNotFound();
         }
 
+        [ChildActionOnly]
         public ActionResult NewestRecipes(int count = DefaultNewestRecipesCount)
         {
             var recipes = this.recipeService.GetNewestRecipes(count)
                 .AsQueryable().Project().To<RecipeOverviewModel>().ToList();
 
-            return PartialView(recipes);
+            return PartialView("_NewestRecipes", recipes);
+        }
+
+        [NonAction]
+        public IEnumerable<string> GetPosibleCategories()
+        {
+            var categoryService = DependencyResolver.Current.GetService<ICategoriesServices>();
+            var posibleCategories = categoryService.GetAllCategories().Select(c => c.Name);
+
+            return posibleCategories;
         }
     }
 }

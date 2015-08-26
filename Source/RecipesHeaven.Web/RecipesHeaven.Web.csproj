@@ -217,6 +217,7 @@
     <Compile Include="ViewModels\Account\SendCodeViewModel.cs" />
     <Compile Include="ViewModels\Account\VerifyCodeViewModel.cs" />
     <Compile Include="ViewModels\BaseViewModel.cs" />
+    <Compile Include="ViewModels\Category\CategoryInputViewModel.cs" />
     <Compile Include="ViewModels\Category\CategoryViewModel.cs" />
     <Compile Include="ViewModels\Home\IndexRecipesViewModel.cs" />
     <Compile Include="ViewModels\Manage\AddPhoneNumberViewModel.cs" />
@@ -229,6 +230,7 @@
     <Compile Include="Startup.cs" />
     <Compile Include="ViewModels\Manage\SetPasswordViewModel.cs" />
     <Compile Include="ViewModels\Manage\VerifyPhoneNumberViewModel.cs" />
+    <Compile Include="ViewModels\Product\ProductInputViewModel.cs" />
     <Compile Include="ViewModels\Product\ProductViewModel.cs" />
     <Compile Include="ViewModels\Recipe\NewRecipeViewModel.cs" />
     <Compile Include="ViewModels\Recipe\RecipeCommentViewModel.cs" />
@@ -309,8 +311,9 @@
     <Content Include="Views\Category\Category.cshtml" />
     <Content Include="Views\Shared\_RecipeBox.cshtml" />
     <Content Include="Views\Recipe\RecipeDetails.cshtml" />
-    <Content Include="Views\Recipe\NewestRecipes.cshtml" />
+    <Content Include="Views\Recipe\_NewestRecipes.cshtml" />
     <Content Include="Views\Recipe\Create.cshtml" />
+    <Content Include="Views\Recipe\EditorTemplates\ProductInputViewModel.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

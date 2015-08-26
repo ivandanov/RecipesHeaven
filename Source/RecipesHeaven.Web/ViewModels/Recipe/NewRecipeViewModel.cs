@@ -4,9 +4,17 @@
     using System.ComponentModel.DataAnnotations;
 
     using RecipesHeaven.Web.Infrastructure.CustomValidation;
+    using RecipesHeaven.Web.ViewModels.Product;
 
     public class NewRecipeViewModel : BaseViewModel
     {
+        public IEnumerable<string> PossibleCategories { get; set; }
+
+        public NewRecipeViewModel()
+        {
+            this.Products = new List<ProductInputViewModel>();
+        }
+
         [Required]
         public string Name { get; set; }
 
@@ -14,7 +22,7 @@
         [Category]
         public string Category { get; set; }
 
-        public IEnumerable<string> Products { get; set; }
+        public IList<ProductInputViewModel> Products { get; set; }
 
         public string PreparingSteps { get; set; }
 

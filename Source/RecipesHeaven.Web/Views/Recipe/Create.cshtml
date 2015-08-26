@@ -1,6 +1,79 @@
-﻿@{
-    ViewBag.Title = "NewRecipe";
+﻿@model NewRecipeViewModel
+
+@using RecipesHeaven.Web.ViewModels.Recipe
+@{
+    ViewBag.Title = "New Recipe";
 }
 
-<h2>NewRecipe</h2>
+<h2>New Recipe</h2>
 
+
+<div class="container">
+    @using (Html.BeginForm("Create", "Recipe", FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
+        <p>
+            @Html.LabelFor(r => r.Name)
+            @Html.EditorFor(r => r.Name)
+            @Html.ValidationMessageFor(r => r.Name)
+        </p>
+        <p>
+            @Html.LabelFor(r => r.Category)
+            @Html.DropDownListFor(r => r.Category, new SelectList(Model.PossibleCategories))
+            @Html.ValidationMessageFor(r => r.Category)
+        </p>
+        <p>
+            @Html.Label("Products")
+
+            <div id="products">
+                @Html.EditorFor(r => r.Products)
+            </div>
+
+            <input type="button"
+                   value="Add"
+                   onclick="addProduct();" />
+        </p>
+        <p>
+            @Html.LabelFor(r => r.PreparingSteps)
+            @Html.TextAreaFor(r => r.PreparingSteps)
+            @Html.ValidationMessageFor(r => r.PreparingSteps)
+        </p>
+        <p>
+            
+        </p>
+
+
+        <input type="submit" value="Submit" />
+    }
+
+</div>
+
+<script>
+    function addProduct() {
+        var lastInputName = $('#products input:last-child'); //.attr('name');
+        var index = 0;
+
+        if (lastInputName != null && lastInputName.length > 0) {
+            index = lastInputName.split('Products[')[1].replace('].Content', '');
+            index++;
+        }
+
+        //<input class="text-box single-line" id="Products_0__Content" name="Products[0].Content" type="text">
+        var input =
+            '<input class=\"text-box single-line\" ' +
+                'id=\"Products_' + index + '__Content\" ' +
+                'name=\"Products[' + index + '].Content\" ' +
+                'type=\"text\" value=\"\">';
+
+        //<span class="field-validation-error" data-valmsg-for="Products[0].Content" data-valmsg-replace="true">The Content must be at least 6 characters long.</span>
+        var validation =
+            '<span class="field-validation-error" ' +
+            'data-valmsg-for="Products[' + index + '].Content" ' +
+            'data-valmsg-replace="true"></span>';
+
+        $('#products').append('<br>');
+        $('#products').append(input);
+        //$('#products').append(validation);
+
+    };
+</script>
