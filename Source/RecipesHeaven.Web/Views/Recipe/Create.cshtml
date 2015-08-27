@@ -12,6 +12,8 @@
     @using (Html.BeginForm("Create", "Recipe", FormMethod.Post))
     {
         @Html.AntiForgeryToken()
+        //test
+        @Html.ValidationMessage("Data")
         <p>
             @Html.LabelFor(r => r.Name)
             @Html.EditorFor(r => r.Name)
@@ -39,7 +41,7 @@
             @Html.ValidationMessageFor(r => r.PreparingSteps)
         </p>
         <p>
-            
+
         </p>
 
 
@@ -50,7 +52,7 @@
 
 <script>
     function addProduct() {
-        var lastInputName = $('#products input:last-child'); //.attr('name');
+        var lastInputName = $('#products input:last').attr('name');
         var index = 0;
 
         if (lastInputName != null && lastInputName.length > 0) {

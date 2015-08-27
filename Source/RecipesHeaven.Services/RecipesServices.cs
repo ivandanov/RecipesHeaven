@@ -21,10 +21,15 @@
         {
             this.categoryServices = categoryServices;
         }
-
+        
         public Recipe GetRecipeById(int id)
         {
             return this.Data.Recipes.GetById(id);
+        }
+
+        public Recipe GetRecipeByName(string name)
+        {
+            return this.Data.Recipes.All().FirstOrDefault(r => r.Name == name);
         }
 
         public IList<Recipe> GetNewestRecipes(int numberOfRecipes = 10)
@@ -37,7 +42,7 @@
                 .ToList();
         }
 
-        public Recipe Create(string name, User author, string category, string preparingSteps, string imgUrl)
+        public Recipe Create(string name, string authorId, string category, string preparingSteps, IEnumerable<string> products, string imgUrl)
         {
             var categoryEntity = categoryServices.GetCategoryByName(category);
             if(categoryEntity == null)
@@ -45,17 +50,31 @@
                 throw new ObjectNotFoundException(string.Format("\"{0}\" category doesn't exist", category));
             }
 
-            //var recipe = new Recipe()
-            //{
-            //    Name = random.RandomString(10, 49),
-            //    Author = someUsers[random.Next(0, someUsers.Count)],
-            //    Category = someCategories[random.Next(0, someCategories.Count)],
-            //    PreparingSteps = random.RandomString(20, 500),
-            //    Image = this.GetSampleImage(DefaultRecipeImagesPath),
-            //    DateAdded = DateTime.Now
-            //};
+            var isNameFree = this.GetRecipeByName(name) == null;
+            if(!isNameFree)
+            {
+                throw new InvalidOperationException(string.Format("There is already a recipe with name: {0}", name));
+            }
 
-            return null;
+            var productsEntity = products
+                .Select(pr => new Product() { Content = pr })
+                .ToList();
+
+            var newRecipe = new Recipe()
+            {
+                Name = name,
+                AuthorId = authorId,
+                Category = categoryEntity,
+                PreparingSteps = preparingSteps,
+                Products = productsEntity,
+                Image = null, //TODO: image processing
+                DateAdded = DateTime.Now
+            };
+
+            this.Data.Recipes.Add(newRecipe);
+            this.Data.SaveChanges();
+
+            return newRecipe;
         }
 
         public IList<Recipe> GetMostCommentedRecipes(int numberOfRecipes)

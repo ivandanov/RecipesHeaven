@@ -9,6 +9,8 @@
     using RecipesHeaven.Web.ViewModels.Recipe;
     using System.Net;
     using System.Collections.Generic;
+    using System;
+    using Microsoft.AspNet.Identity;
 
     public class RecipeController : BaseController
     {
@@ -43,6 +45,7 @@
             return View(model);
         }
 
+        
         [HttpPost]
         [Authorize]
         [ValidateAntiForgeryToken]
@@ -53,18 +56,28 @@
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            if (!ModelState.IsValid)
+
+            if (ModelState.IsValid)
             {
-                //categories for dropdown list
-                model.PossibleCategories = GetPosibleCategories();
-                return View(model);
+                try
+                {
+                    var userId = this.User.Identity.GetUserId();
+                    var products = model.Products.Select(m => m.Content);
+                    var newRecipe = this.recipeService
+                        .Create(model.Name, userId, model.Category, model.PreparingSteps, products, String.Empty);
+                    
+                    return RedirectToAction("Recipe", new { id = newRecipe.Id });
+                }
+                catch (Exception ex)
+                {
+                    this.ModelState.AddModelError("DataError", ex.Message);
+                }
             }
 
-
-
-            return RedirectToAction("Recipe", new { id = 1 });
+            //categories for dropdown list
+            model.PossibleCategories = GetPosibleCategories();
+            return View(model);
         }
-
 
         public ActionResult MyRecipes()
         {

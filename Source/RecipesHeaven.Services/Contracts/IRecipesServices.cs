@@ -11,6 +11,10 @@
     {
         Recipe GetRecipeById(int id);
 
+        Recipe GetRecipeByName(string name);
+
+        Recipe Create(string name, string authorId, string category, string preparingSteps, IEnumerable<string> products, string imgUrl);
+
         IList<Recipe> GetNewestRecipes(int numberOfRecipes = 10);
 
         IList<Recipe> GetMostCommentedRecipes(int numberOfRecipes);

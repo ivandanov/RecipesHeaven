@@ -13,6 +13,7 @@
         public NewRecipeViewModel()
         {
             this.Products = new List<ProductInputViewModel>();
+            this.Products.Add(new ProductInputViewModel());
         }
 
         [Required]
