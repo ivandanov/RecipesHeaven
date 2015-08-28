@@ -1,5 +1,6 @@
 ﻿namespace RecipesHeaven.Services.Contracts
 {
+    using System;
     using System.Linq;
     using System.Collections.Generic;
 
@@ -21,7 +22,7 @@
 
         IList<Recipe> GetMostRatedRecipes(int numberOfRecipes);
 
-        IList<Recipe> GetRecipesFromUser(IUser user);
+        IList<Recipe> GetRecipesFromUser(string userId, int numberOfRecipes = Int32.MaxValue);
 
         IList<Recipe> GetRecipesByProduct(Product product);
 

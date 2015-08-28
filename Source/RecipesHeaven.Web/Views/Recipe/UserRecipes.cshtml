@@ -1,0 +1,25 @@
+﻿@model IEnumerable<RecipeOverviewModel>
+@using RecipesHeaven.Web.ViewModels.Recipe;
+@{
+    ViewBag.Title = "UserRecipes";
+}
+
+<h2>UserRecipes</h2>
+
+@if (Model.Count() > 0)
+{
+    <ul>
+        @foreach (var recipe in Model)
+        {
+            <li>
+                <span>@Html.ActionLink(recipe.Name, "Recipe", "Recipe", new { id = recipe.Id }, null)</span> | 
+                <span>@recipe.NumberOfComments</span>
+            </li>
+        }
+    </ul>
+}
+else
+{
+
+}
+

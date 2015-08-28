@@ -1,4 +1,4 @@
-﻿@model NewRecipeViewModel
+﻿@model RecipeInputViewModel
 
 @using RecipesHeaven.Web.ViewModels.Recipe
 @{
@@ -12,8 +12,8 @@
     @using (Html.BeginForm("Create", "Recipe", FormMethod.Post))
     {
         @Html.AntiForgeryToken()
-        //test
-        @Html.ValidationMessage("Data")
+        
+        @Html.ValidationMessage("DataError", new { @class = "warning" }, "h1")
         <p>
             @Html.LabelFor(r => r.Name)
             @Html.EditorFor(r => r.Name)
@@ -31,19 +31,13 @@
                 @Html.EditorFor(r => r.Products)
             </div>
 
-            <input type="button"
-                   value="Add"
-                   onclick="addProduct();" />
+            <input type="button" value="Add" onclick="addProduct();" />
         </p>
         <p>
             @Html.LabelFor(r => r.PreparingSteps)
             @Html.TextAreaFor(r => r.PreparingSteps)
             @Html.ValidationMessageFor(r => r.PreparingSteps)
         </p>
-        <p>
-
-        </p>
-
 
         <input type="submit" value="Submit" />
     }
@@ -67,15 +61,7 @@
                 'name=\"Products[' + index + '].Content\" ' +
                 'type=\"text\" value=\"\">';
 
-        //<span class="field-validation-error" data-valmsg-for="Products[0].Content" data-valmsg-replace="true">The Content must be at least 6 characters long.</span>
-        var validation =
-            '<span class="field-validation-error" ' +
-            'data-valmsg-for="Products[' + index + '].Content" ' +
-            'data-valmsg-replace="true"></span>';
-
         $('#products').append('<br>');
         $('#products').append(input);
-        //$('#products').append(validation);
-
     };
 </script>

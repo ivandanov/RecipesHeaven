@@ -1,24 +1,25 @@
 ﻿namespace RecipesHeaven.Web.Controllers
 {
+    using System;
+    using System.Net;
     using System.Linq;
     using System.Web.Mvc;
+    using System.Collections.Generic;
+
     using AutoMapper;
     using AutoMapper.QueryableExtensions;
+    using Microsoft.AspNet.Identity;
+
     using RecipesHeaven.Data.Contracts;
     using RecipesHeaven.Services.Contracts;
     using RecipesHeaven.Web.ViewModels.Recipe;
-    using System.Net;
-    using System.Collections.Generic;
-    using System;
-    using Microsoft.AspNet.Identity;
 
     public class RecipeController : BaseController
     {
         private const int DefaultNewestRecipesCount = 9;
         private IRecipesServices recipeService;
 
-        public RecipeController(IRecipesHeavenData data, IRecipesServices recipeService)
-            : base(data)
+        public RecipeController(IRecipesServices recipeService)
         {
             this.recipeService = recipeService;
         }
@@ -37,25 +38,24 @@
             return View("RecipeDetails", recipeModel);
         }
 
+        [Authorize]
         public ActionResult Create()
         {
-            var model = new NewRecipeViewModel();
+            var model = new RecipeInputViewModel();
             model.PossibleCategories = this.GetPosibleCategories();
             
             return View(model);
         }
-
-        
+               
         [HttpPost]
         [Authorize]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(NewRecipeViewModel model)
+        public ActionResult Create(RecipeInputViewModel model)
         {
             if (model == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-
 
             if (ModelState.IsValid)
             {
@@ -70,18 +70,24 @@
                 }
                 catch (Exception ex)
                 {
-                    this.ModelState.AddModelError("DataError", ex.Message);
+                    //TODO: log4net log error
+                    this.ModelState.AddModelError("DataError", "There was an error while saving your recipe. Please try again later.");
                 }
             }
 
-            //categories for dropdown list
-            model.PossibleCategories = GetPosibleCategories();
+            //dropdown list
+            model.PossibleCategories = this.GetPosibleCategories();
             return View(model);
         }
 
+        [Authorize]
         public ActionResult MyRecipes()
         {
-            return HttpNotFound();
+            var userId = this.User.Identity.GetUserId();
+            var userRecipes = recipeService.GetRecipesFromUser(userId)
+                .AsQueryable().Project().To<RecipeOverviewModel>().ToList();
+            
+            return View("UserRecipes", userRecipes);
         }
 
         [ChildActionOnly]

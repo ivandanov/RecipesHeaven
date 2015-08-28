@@ -232,7 +232,7 @@
     <Compile Include="ViewModels\Manage\VerifyPhoneNumberViewModel.cs" />
     <Compile Include="ViewModels\Product\ProductInputViewModel.cs" />
     <Compile Include="ViewModels\Product\ProductViewModel.cs" />
-    <Compile Include="ViewModels\Recipe\NewRecipeViewModel.cs" />
+    <Compile Include="ViewModels\Recipe\RecipeInputViewModel.cs" />
     <Compile Include="ViewModels\Recipe\RecipeCommentViewModel.cs" />
     <Compile Include="ViewModels\Recipe\RecipeOverviewModel.cs" />
     <Compile Include="ViewModels\Recipe\RecipeViewModel.cs" />
@@ -314,6 +314,7 @@
     <Content Include="Views\Recipe\_NewestRecipes.cshtml" />
     <Content Include="Views\Recipe\Create.cshtml" />
     <Content Include="Views\Recipe\EditorTemplates\ProductInputViewModel.cshtml" />
+    <Content Include="Views\Recipe\UserRecipes.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

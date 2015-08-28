@@ -1,16 +1,16 @@
 ﻿namespace RecipesHeaven.Services
 {
+    using System;
     using System.Linq;
+    using System.Linq.Expressions;
+    using System.Data.Entity.Core;
     using System.Collections.Generic;
 
     using Microsoft.AspNet.Identity;
 
+    using RecipesHeaven.Models;
     using RecipesHeaven.Data.Contracts;
     using RecipesHeaven.Services.Contracts;
-    using RecipesHeaven.Models;
-    using System.Linq.Expressions;
-    using System;
-    using System.Data.Entity.Core;
 
     public class RecipesServices : BaseService, IRecipesServices
     {
@@ -157,5 +157,16 @@
             return a;
         }
 
+        public IList<Recipe> GetRecipesFromUser(string userId, int numberOfRecipes = Int32.MaxValue)
+        {
+            var recipes = this.Data.Recipes
+                .All()
+                .Where(r => r.Author.Id == userId)
+                .OrderByDescending(r => r.DateAdded)
+                .Take(numberOfRecipes)
+                .ToList();
+
+            return recipes;
+        }
     }
 }
