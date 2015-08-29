@@ -197,6 +197,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\CategoryController.cs" />
+    <Compile Include="Controllers\CommentController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\ProductController.cs" />
@@ -219,6 +220,9 @@
     <Compile Include="ViewModels\BaseViewModel.cs" />
     <Compile Include="ViewModels\Category\CategoryInputViewModel.cs" />
     <Compile Include="ViewModels\Category\CategoryViewModel.cs" />
+    <Compile Include="ViewModels\Comment\CommentInputViewModel.cs" />
+    <Compile Include="ViewModels\Comment\CommentViewModel.cs" />
+    <Compile Include="ViewModels\Comment\RecipeCommentsViewModel.cs" />
     <Compile Include="ViewModels\Home\IndexRecipesViewModel.cs" />
     <Compile Include="ViewModels\Manage\AddPhoneNumberViewModel.cs" />
     <Compile Include="ViewModels\Manage\ChangePasswordViewModel.cs" />
@@ -233,7 +237,6 @@
     <Compile Include="ViewModels\Product\ProductInputViewModel.cs" />
     <Compile Include="ViewModels\Product\ProductViewModel.cs" />
     <Compile Include="ViewModels\Recipe\RecipeInputViewModel.cs" />
-    <Compile Include="ViewModels\Recipe\RecipeCommentViewModel.cs" />
     <Compile Include="ViewModels\Recipe\RecipeOverviewModel.cs" />
     <Compile Include="ViewModels\Recipe\RecipeViewModel.cs" />
   </ItemGroup>
@@ -315,6 +318,8 @@
     <Content Include="Views\Recipe\Create.cshtml" />
     <Content Include="Views\Recipe\EditorTemplates\ProductInputViewModel.cshtml" />
     <Content Include="Views\Recipe\UserRecipes.cshtml" />
+    <Content Include="Views\Comment\_CommentsPartial.cshtml" />
+    <Content Include="Views\Comment\_SingleCommentPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

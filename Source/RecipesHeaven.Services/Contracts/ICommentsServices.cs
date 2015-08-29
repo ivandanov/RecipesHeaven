@@ -6,6 +6,8 @@
 
     public interface ICommentsServices
     {
+        Comment PostComment(int recipeId, string userId, string comment);
+
         IQueryable<Comment> GetCommentsByRecipe(Recipe recipe, int numberOfComments);
     }
 }

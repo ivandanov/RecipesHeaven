@@ -14,6 +14,11 @@
         {
         }
 
+        public User GetUser(string userId)
+        {
+            return this.Data.Users.GetById(userId);
+        }
+
         public IQueryable<User> GetCurrentUser(RequestContext requestContext)
         {
             return this.Data

@@ -13,15 +13,19 @@
     using RecipesHeaven.Data.Contracts;
     using RecipesHeaven.Services.Contracts;
     using RecipesHeaven.Web.ViewModels.Recipe;
+    using RecipesHeaven.Models;
+    using RecipesHeaven.Web.ViewModels.Comment;
 
     public class RecipeController : BaseController
     {
         private const int DefaultNewestRecipesCount = 9;
         private IRecipesServices recipeService;
+        private ICommentsServices commentsServices;
 
-        public RecipeController(IRecipesServices recipeService)
+        public RecipeController(IRecipesServices recipeService, ICommentsServices commentsServices)
         {
             this.recipeService = recipeService;
+            this.commentsServices = commentsServices;
         }
 
         public ActionResult Recipe(int id)
@@ -43,10 +47,10 @@
         {
             var model = new RecipeInputViewModel();
             model.PossibleCategories = this.GetPosibleCategories();
-            
+
             return View(model);
         }
-               
+
         [HttpPost]
         [Authorize]
         [ValidateAntiForgeryToken]
@@ -65,10 +69,10 @@
                     var products = model.Products.Select(m => m.Content);
                     var newRecipe = this.recipeService
                         .Create(model.Name, userId, model.Category, model.PreparingSteps, products, String.Empty);
-                    
+
                     return RedirectToAction("Recipe", new { id = newRecipe.Id });
                 }
-                catch (Exception ex)
+                catch (Exception)
                 {
                     //TODO: log4net log error
                     this.ModelState.AddModelError("DataError", "There was an error while saving your recipe. Please try again later.");
@@ -86,10 +90,10 @@
             var userId = this.User.Identity.GetUserId();
             var userRecipes = recipeService.GetRecipesFromUser(userId)
                 .AsQueryable().Project().To<RecipeOverviewModel>().ToList();
-            
+
             return View("UserRecipes", userRecipes);
         }
-
+                
         [ChildActionOnly]
         public ActionResult NewestRecipes(int count = DefaultNewestRecipesCount)
         {

@@ -7,6 +7,7 @@
 
     using RecipesHeaven.Web.Infrastructure.Mapping;
     using RecipesHeaven.Web.ViewModels.Product;
+    using RecipesHeaven.Web.ViewModels.Comment;
 
     public class RecipeViewModel : BaseViewModel, IMapFrom<Models.Recipe>, IHaveCustomMappings
     {
@@ -26,7 +27,7 @@
 
         public DateTime DateAdded { get; set; }
 
-        public ICollection<RecipeCommentViewModel> Comments { get; set; }
+        public ICollection<CommentViewModel> Comments { get; set; }
 
         public virtual ICollection<ProductViewModel> Products { get; set; }
 

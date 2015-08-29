@@ -12,6 +12,8 @@
 
         public virtual User Author { get; set; }
 
+        public string AuthorId { get; set; }
+
         [MaxLength(500)]
         public string Content { get; set; }
 

@@ -1,5 +1,7 @@
 ﻿@model RecipeViewModel
 @using RecipesHeaven.Web.ViewModels.Recipe;
+@using RecipesHeaven.Web.ViewModels.Comment;
+
 @{
     ViewBag.Title = "Recipe details";
 }
@@ -43,24 +45,17 @@
                 </p>
             </div>
         </div>
-        <div class="well">
-            <div class="text-right">
-                <a class="btn btn-success">Add a comment</a>
-            </div>
-            @if (Model.NumberOfComments > 0)
+
+        @{
+            var commentModel = new RecipeCommentsViewModel()
             {
-                foreach (var comment in Model.Comments)
-                {
-                    <hr />
-                    <div class="row">
-                        <div class="col-md-12">
-                            <b>@comment.AuthorName:</b>
-                            <p>@comment.Content</p>
-                        </div>
-                    </div>
-                }
-            }            
-        </div>
+                Comments = Model.Comments,
+                RecipeId = Model.Id,
+                RecipeName = Model.Name
+            };
+            
+            Html.RenderPartial("../../Views/Comment/_CommentsPartial", commentModel);
+        }
     </div>
 
 </div>

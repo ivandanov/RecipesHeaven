@@ -7,6 +7,8 @@
     
     public interface IUsersServices
     {
+        User GetUser(string userId);
+
         IQueryable<User> GetCurrentUser(RequestContext requestContext);
     }
 }

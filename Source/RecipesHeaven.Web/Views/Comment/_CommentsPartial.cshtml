@@ -1,0 +1,35 @@
+﻿@model RecipeCommentsViewModel
+@using RecipesHeaven.Web.ViewModels.Comment;
+
+<div class="well">
+    @if (User.Identity.IsAuthenticated)
+    {
+        var ajaxOptions = new AjaxOptions()
+        {
+            HttpMethod = "Post",
+            InsertionMode = InsertionMode.InsertAfter,
+            UpdateTargetId = "comments",
+            OnFailure = "alert('There is a problem with saving your comment. Try again later.');"
+        };
+        using (Ajax.BeginForm("PostComment", "Comment", ajaxOptions))
+        {
+            @Html.Hidden("RecipeId", Model.RecipeId);
+        @Html.TextArea("comment");
+        @Html.AntiForgeryToken();
+
+        <div class="text-right">
+            <input type="submit" class="btn btn-success" value="Add a comment" />
+        </div>
+        }
+    }
+
+    <div id="comments">
+        @if (Model.Comments.Count() > 0)
+        {
+            foreach (var comment in Model.Comments)
+            {
+                @Html.Partial("../../Views/Comment/_SingleCommentPartial", comment)
+            }
+        }
+    </div>
+</div>
