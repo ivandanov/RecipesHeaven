@@ -7,61 +7,76 @@
 
 <h2>New Recipe</h2>
 
-
 <div class="container">
-    @using (Html.BeginForm("Create", "Recipe", FormMethod.Post))
+    @using (Html.BeginForm("Create", "Recipe", FormMethod.Post, new { id = "create-form", @class = "form-horizontal", role = "form" }))
     {
         @Html.AntiForgeryToken()
-        
-        @Html.ValidationMessage("DataError", new { @class = "warning" }, "h1")
-        <p>
-            @Html.LabelFor(r => r.Name)
-            @Html.EditorFor(r => r.Name)
-            @Html.ValidationMessageFor(r => r.Name)
-        </p>
-        <p>
-            @Html.LabelFor(r => r.Category)
-            @Html.DropDownListFor(r => r.Category, new SelectList(Model.PossibleCategories))
-            @Html.ValidationMessageFor(r => r.Category)
-        </p>
-        <p>
-            @Html.Label("Products")
-
+        @Html.ValidationMessage("DataError", new { @class = "text-danger" }, "h1")
+        <div class="form-group">
+            @Html.LabelFor(r => r.Name, new { @class = "col-md-2 control-label" })
+            @Html.TextBoxFor(r => r.Name, new { @class = "form-control  col-md-4" })
+            @Html.ValidationMessageFor(r => r.Name, "", new { @class = "text-danger  col-md-4" })
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(r => r.Category, new { @class = "col-md-2 control-label" })
+            @Html.DropDownListFor(r => r.Category, new SelectList(Model.PossibleCategories), new { @class = "form-control  col-md-4" })
+            @Html.ValidationMessageFor(r => r.Category, "", new { @class = "text-danger  col-md-4" })
+        </div>
+        <div class="form-horizontal">            
             <div id="products">
-                @Html.EditorFor(r => r.Products)
+                <div class="form-group">
+                    @Html.Label("Product 1:", new { @class = "col-md-2 control-label" })
+                    @Html.EditorFor(r => r.Products)
+                </div>
             </div>
-
-            <input type="button" value="Add" onclick="addProduct();" />
-        </p>
-        <p>
-            @Html.LabelFor(r => r.PreparingSteps)
-            @Html.TextAreaFor(r => r.PreparingSteps)
-            @Html.ValidationMessageFor(r => r.PreparingSteps)
-        </p>
-
-        <input type="submit" value="Submit" />
+        </div>
+        <div class="form-group">
+            <label class="control-label col-md-2">Add new product:</label>
+            <div class="input-group col-md-7">
+                <button type="button" class="btn btn-success " onclick="addProduct();" >Add</button>
+            </div>
+        </div>
+        <div class="row form-group">
+            @Html.LabelFor(r => r.PreparingSteps, new { @class = "col-md-2 control-label" })
+            @Html.TextAreaFor(r => r.PreparingSteps, new { @class = "form-control  col-md-4" })
+            @Html.ValidationMessageFor(r => r.PreparingSteps, "", new { @class = "text-danger  col-md-4" })
+        </div>
+        <input type="submit" class="btn btn-primary" value="Submit" />
     }
-
 </div>
+@section scripts{
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+    <script>
+        function addProduct() {
+            var newIndex = $('#products input').length;
 
-<script>
-    function addProduct() {
-        var lastInputName = $('#products input:last').attr('name');
-        var index = 0;
+            var productNumber = newIndex + 1;
+            var numberLabel = $('<label>')
+                .addClass('col-md-2 control-label')
+                .text(productNumber + ':');
 
-        if (lastInputName != null && lastInputName.length > 0) {
-            index = lastInputName.split('Products[')[1].replace('].Content', '');
-            index++;
-        }
+            var newInput = $('#products input:last').clone();
+            newInput.val('');
+            newInput.attr('id', 'Products_' + newIndex + '__Content');
+            newInput.attr('name', 'Products[' + newIndex + '].Content');
 
-        //<input class="text-box single-line" id="Products_0__Content" name="Products[0].Content" type="text">
-        var input =
-            '<input class=\"text-box single-line\" ' +
-                'id=\"Products_' + index + '__Content\" ' +
-                'name=\"Products[' + index + '].Content\" ' +
-                'type=\"text\" value=\"\">';
+            var newValidation = $('#products .form-group [class*="field-validation"]:last').clone();
+            newValidation.text('');
+            newValidation.attr('data-valmsg-for', 'Products[' + newIndex + '].Content');
 
-        $('#products').append('<br>');
-        $('#products').append(input);
-    };
-</script>
+
+            var formGroup = $('<div>').addClass('form-group');
+            formGroup.append(numberLabel);
+            formGroup.append(newInput);
+            formGroup.append(newValidation);
+            $('#products').append(formGroup);
+
+            //unobtrusive validation for the new fields
+            var form = $("#create-form");
+            form.removeData('validator');
+            form.removeData('unobtrusiveValidation');
+            $.validator.unobtrusive.parse(form);
+        };
+    </script>
+}

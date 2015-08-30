@@ -7,19 +7,20 @@
         var ajaxOptions = new AjaxOptions()
         {
             HttpMethod = "Post",
-            InsertionMode = InsertionMode.InsertAfter,
+            InsertionMode = InsertionMode.InsertBefore,
             UpdateTargetId = "comments",
+            OnSuccess = "onSucces",
             OnFailure = "alert('There is a problem with saving your comment. Try again later.');"
         };
         using (Ajax.BeginForm("PostComment", "Comment", ajaxOptions))
         {
-            @Html.Hidden("RecipeId", Model.RecipeId);
-        @Html.TextArea("comment");
-        @Html.AntiForgeryToken();
+            @Html.Hidden("RecipeId", Model.RecipeId)
+            @Html.TextArea("comment", new { id = "comment-area" })
+            @Html.AntiForgeryToken()
 
-        <div class="text-right">
-            <input type="submit" class="btn btn-success" value="Add a comment" />
-        </div>
+            <div class="text-right">
+                <input type="submit" class="btn btn-success" value="Add a comment" />
+            </div>
         }
     }
 
@@ -33,3 +34,10 @@
         }
     </div>
 </div>
+
+<script>
+    function onSucces()
+    {
+        $('#comment-area').text('');
+    }
+</script>

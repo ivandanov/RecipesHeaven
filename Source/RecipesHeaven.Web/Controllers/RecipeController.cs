@@ -15,6 +15,7 @@
     using RecipesHeaven.Web.ViewModels.Recipe;
     using RecipesHeaven.Models;
     using RecipesHeaven.Web.ViewModels.Comment;
+    using RecipesHeaven.Web.ViewModels.Product;
 
     public class RecipeController : BaseController
     {
@@ -82,6 +83,11 @@
             //dropdown list
             model.PossibleCategories = this.GetPosibleCategories();
             return View(model);
+        }
+
+        public ActionResult Add()
+        {
+            return PartialView("~/Views/Recipe/EditorTemplates/ProductInputViewModel.cshtml", new ProductInputViewModel());
         }
 
         [Authorize]

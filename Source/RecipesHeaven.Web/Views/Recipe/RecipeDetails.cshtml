@@ -53,9 +53,15 @@
                 RecipeId = Model.Id,
                 RecipeName = Model.Name
             };
-            
+
             Html.RenderPartial("../../Views/Comment/_CommentsPartial", commentModel);
         }
     </div>
 
 </div>
+@section scripts{
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.js"></script>
+    <script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
+
+}

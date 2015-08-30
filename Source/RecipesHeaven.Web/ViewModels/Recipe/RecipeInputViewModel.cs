@@ -16,7 +16,8 @@
             this.Products.Add(new ProductInputViewModel());
         }
 
-        [Required]
+        [Required(ErrorMessage = "This field is empty")]
+        [MinLength(3, ErrorMessage = "Too short recipe name. Please write more datailed one")]
         public string Name { get; set; }
 
         [Required]

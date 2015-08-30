@@ -1,6 +1,5 @@
 ﻿@model ProductInputViewModel
 @using RecipesHeaven.Web.ViewModels.Product;
 
-<br />
-@Html.EditorFor(m => m.Content)
-@Html.ValidationMessageFor(m => m.Content)
+@Html.TextBoxFor(m => m.Content, new { @class = "form-control col-md-4" })
+@Html.ValidationMessageFor(m => m.Content, "", new { @class = "text-danger col-md-4" })
