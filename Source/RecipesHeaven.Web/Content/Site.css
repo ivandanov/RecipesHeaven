@@ -23,6 +23,11 @@ textarea {
     max-width: 280px;
 }
 
+.field-validation-valid
+{
+    display: none;
+}
+
 .recipe-name {
     text-align: center;
     font-weight: bold;

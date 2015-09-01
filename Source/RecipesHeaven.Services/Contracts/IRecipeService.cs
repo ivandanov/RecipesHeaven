@@ -8,7 +8,7 @@
 
     using RecipesHeaven.Models;
 
-    public interface IRecipesServices
+    public interface IRecipeService
     {
         Recipe GetRecipeById(int id);
 

@@ -8,12 +8,12 @@
     using System.Data.Entity.Core;
     using System;
 
-    public class CommentsServices : BaseService, ICommentsServices
+    public class CommentService : BaseService, ICommentService
     {
-        private IUsersServices userServices;
-        private IRecipesServices recipesService;
+        private IUserService userServices;
+        private IRecipeService recipesService;
 
-        public CommentsServices(IRecipesHeavenData data, IUsersServices userServices, IRecipesServices recipesService)
+        public CommentService(IRecipesHeavenData data, IUserService userServices, IRecipeService recipesService)
             : base(data)
         {
             this.userServices = userServices;

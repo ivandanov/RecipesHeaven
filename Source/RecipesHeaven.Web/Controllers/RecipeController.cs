@@ -20,16 +20,16 @@
     public class RecipeController : BaseController
     {
         private const int DefaultNewestRecipesCount = 9;
-        private IRecipesServices recipeService;
-        private ICommentsServices commentsServices;
+        private IRecipeService recipeService;
+        private ICommentService commentsServices;
 
-        public RecipeController(IRecipesServices recipeService, ICommentsServices commentsServices)
+        public RecipeController(IRecipeService recipeService, ICommentService commentsServices)
         {
             this.recipeService = recipeService;
             this.commentsServices = commentsServices;
         }
 
-        public ActionResult Recipe(int id)
+        public ActionResult Recipe(int id, bool isCreated = false)
         {
             var recipe = recipeService.GetRecipeById(id);
 
@@ -59,35 +59,37 @@
         {
             if (model == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                return this.Create();
             }
 
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
-                try
-                {
-                    var userId = this.User.Identity.GetUserId();
-                    var products = model.Products.Select(m => m.Content);
-                    var newRecipe = this.recipeService
-                        .Create(model.Name, userId, model.Category, model.PreparingSteps, products, String.Empty);
-
-                    return RedirectToAction("Recipe", new { id = newRecipe.Id });
-                }
-                catch (Exception)
-                {
-                    //TODO: log4net log error
-                    this.ModelState.AddModelError("DataError", "There was an error while saving your recipe. Please try again later.");
-                }
+                return View(model);
             }
 
-            //dropdown list
-            model.PossibleCategories = this.GetPosibleCategories();
-            return View(model);
-        }
+            var isRecipeNameFree = this.recipeService.GetRecipeByName(model.Name) == null;
+            if(!isRecipeNameFree)
+            {
+                this.ModelState.AddModelError("DataError", "There is already a recipe with this name. Please check it before post your recipe");
+                return View(model);
+            }
 
-        public ActionResult Add()
-        {
-            return PartialView("~/Views/Recipe/EditorTemplates/ProductInputViewModel.cshtml", new ProductInputViewModel());
+            var userId = this.User.Identity.GetUserId();
+            var products = model.Products.Select(m => m.Content);
+            try
+            {
+                var newRecipe = this.recipeService
+                    .Create(model.Name, userId, model.Category, model.PreparingSteps, products, String.Empty);
+
+                return RedirectToAction("Recipe", new { id = newRecipe.Id, isCreated = true });
+            }
+            catch (Exception)
+            {
+                //TODO: log4net log error
+                this.ModelState.AddModelError("DataError", "There was an error while saving your recipe. Please try again later.");
+            }
+
+            return View(model);
         }
 
         [Authorize]
@@ -95,11 +97,11 @@
         {
             var userId = this.User.Identity.GetUserId();
             var userRecipes = recipeService.GetRecipesFromUser(userId)
-                .AsQueryable().Project().To<RecipeOverviewModel>().ToList();
+                .AsQueryable().Project().To<RecipeViewModel>().ToList();
 
             return View("UserRecipes", userRecipes);
         }
-                
+
         [ChildActionOnly]
         public ActionResult NewestRecipes(int count = DefaultNewestRecipesCount)
         {
@@ -110,10 +112,13 @@
         }
 
         [NonAction]
-        public IEnumerable<string> GetPosibleCategories()
+        public IList<string> GetPosibleCategories()
         {
-            var categoryService = DependencyResolver.Current.GetService<ICategoriesServices>();
-            var posibleCategories = categoryService.GetAllCategories().Select(c => c.Name);
+            var categoryService = DependencyResolver.Current.GetService<ICategoryService>();
+            var posibleCategories = categoryService
+                .GetAllCategories()
+                .Select(c => c.Name)
+                .ToList();
 
             return posibleCategories;
         }

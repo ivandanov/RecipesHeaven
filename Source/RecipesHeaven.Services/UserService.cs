@@ -7,9 +7,9 @@
     using RecipesHeaven.Data.Contracts;
     using RecipesHeaven.Services.Contracts;
 
-    public class UsersServices : BaseService, IUsersServices
+    public class UserService : BaseService, IUserService
     {
-        public UsersServices(IRecipesHeavenData data)
+        public UserService(IRecipesHeavenData data)
             :base(data)
         {
         }

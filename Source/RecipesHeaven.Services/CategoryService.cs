@@ -7,9 +7,9 @@
     using RecipesHeaven.Services.Contracts;
     using System.Collections.Generic;
 
-    public class CategoriesServices : BaseService, ICategoriesServices
+    public class CategoryService : BaseService, ICategoryService
     {
-        public CategoriesServices(IRecipesHeavenData data)
+        public CategoryService(IRecipesHeavenData data)
             :base(data)
         {
         }

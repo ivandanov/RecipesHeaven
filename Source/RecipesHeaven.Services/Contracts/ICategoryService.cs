@@ -5,7 +5,7 @@
     using RecipesHeaven.Models;
     using System.Collections.Generic;
 
-    public interface ICategoriesServices
+    public interface ICategoryService
     {
         Category GetCategoryById(int id);
 

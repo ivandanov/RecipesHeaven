@@ -5,7 +5,7 @@
 
     using RecipesHeaven.Models;
     
-    public interface IProductsServices
+    public interface IProductService
     {
         IQueryable<Product> GetMostUsedProducts(int numberOfProducts);
 

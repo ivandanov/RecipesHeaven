@@ -69,11 +69,11 @@ namespace RecipesHeaven.Web.App_Start
             kernel.Bind<DbContext>().To<RecipesHeavenDbContext>().InSingletonScope();
             kernel.Bind<IRecipesHeavenData>().To<RecipesHeavenData>().InSingletonScope();
 
-            kernel.Bind<IProductsServices>().To<ProductsServices>();
-            kernel.Bind<IRecipesServices>().To<RecipesServices>();
-            kernel.Bind<ICategoriesServices>().To<CategoriesServices>();
-            kernel.Bind<ICommentsServices>().To<CommentsServices>();
-            kernel.Bind<IUsersServices>().To<UsersServices>();
+            kernel.Bind<IProductService>().To<ProductService>();
+            kernel.Bind<IRecipeService>().To<RecipeService>();
+            kernel.Bind<ICategoryService>().To<CategoryService>();
+            kernel.Bind<ICommentService>().To<CommentService>();
+            kernel.Bind<IUserService>().To<UserService>();
         }        
     }
 }

@@ -5,7 +5,7 @@
 
     using RecipesHeaven.Models;
     
-    public interface IUsersServices
+    public interface IUserService
     {
         User GetUser(string userId);
 

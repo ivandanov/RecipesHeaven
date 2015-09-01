@@ -8,8 +8,6 @@
 
     public class RecipeInputViewModel : BaseViewModel
     {
-        public IEnumerable<string> PossibleCategories { get; set; }
-
         public RecipeInputViewModel()
         {
             this.Products = new List<ProductInputViewModel>();
@@ -23,6 +21,8 @@
         [Required]
         [Category]
         public string Category { get; set; }
+
+        public IList<string> PossibleCategories { get; set; }
 
         public IList<ProductInputViewModel> Products { get; set; }
 

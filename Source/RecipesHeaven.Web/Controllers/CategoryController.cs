@@ -12,10 +12,10 @@
 
     public class CategoryController : BaseController
     {
-        private ICategoriesServices categoryService;
-        private IRecipesServices recipeService;
+        private ICategoryService categoryService;
+        private IRecipeService recipeService;
 
-        public CategoryController(ICategoriesServices categoryService, IRecipesServices recipeService)
+        public CategoryController(ICategoryService categoryService, IRecipeService recipeService)
         {
             this.categoryService = categoryService;
             this.recipeService = recipeService;

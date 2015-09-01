@@ -16,8 +16,8 @@
                 return new ValidationResult("Invalid category");
             }
 
-            var categoryServices = (ICategoriesServices) DependencyResolver.Current
-                .GetService(typeof(ICategoriesServices));
+            var categoryServices = (ICategoryService) DependencyResolver.Current
+                .GetService(typeof(ICategoryService));
 
             var posibleCategories = categoryServices.GetAllCategories().Select(c => c.Name);
             if (!posibleCategories.Contains(valueAsString))

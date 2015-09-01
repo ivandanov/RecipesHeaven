@@ -4,7 +4,7 @@
 
     using RecipesHeaven.Models;
 
-    public interface ICommentsServices
+    public interface ICommentService
     {
         Comment PostComment(int recipeId, string userId, string comment);
 

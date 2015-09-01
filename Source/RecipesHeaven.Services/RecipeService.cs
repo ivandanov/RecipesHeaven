@@ -12,11 +12,11 @@
     using RecipesHeaven.Data.Contracts;
     using RecipesHeaven.Services.Contracts;
 
-    public class RecipesServices : BaseService, IRecipesServices
+    public class RecipeService : BaseService, IRecipeService
     {
-        private ICategoriesServices categoryServices;
+        private ICategoryService categoryServices;
 
-        public RecipesServices(IRecipesHeavenData data, ICategoriesServices categoryServices)
+        public RecipeService(IRecipesHeavenData data, ICategoryService categoryServices)
             : base(data)
         {
             this.categoryServices = categoryServices;

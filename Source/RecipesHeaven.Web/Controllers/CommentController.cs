@@ -15,10 +15,10 @@
 
     public class CommentController : BaseController
     {
-        private ICommentsServices commentService;
-        private IRecipesServices recipeService;
+        private ICommentService commentService;
+        private IRecipeService recipeService;
 
-        public CommentController(ICommentsServices commentService, IRecipesServices recipeService)
+        public CommentController(ICommentService commentService, IRecipeService recipeService)
         {
             this.commentService = commentService;
             this.recipeService = recipeService;
