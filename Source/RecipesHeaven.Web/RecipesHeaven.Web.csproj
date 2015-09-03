@@ -325,7 +325,7 @@
     <Content Include="Views\Recipe\Create.cshtml" />
     <Content Include="Views\Recipe\EditorTemplates\ProductInputViewModel.cshtml" />
     <Content Include="Views\Recipe\UserRecipes.cshtml" />
-    <Content Include="Views\Comment\_CommentsPartial.cshtml" />
+    <Content Include="Views\Comment\_CommentInputPartial.cshtml" />
     <Content Include="Views\Comment\_SingleCommentPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>

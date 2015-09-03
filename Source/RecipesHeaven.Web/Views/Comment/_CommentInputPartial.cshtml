@@ -1,0 +1,52 @@
+﻿@model CommentInputViewModel
+@using RecipesHeaven.Web.ViewModels.Comment;
+
+@if (User.Identity.IsAuthenticated)
+{
+    var ajaxOptions = new AjaxOptions()
+    {
+        HttpMethod = "Post",
+        InsertionMode = InsertionMode.InsertBefore,
+        UpdateTargetId = "comments",
+        OnSuccess = "onSuccess",
+        OnFailure = "onFailure"
+    };
+    using (Ajax.BeginForm("PostComment", "Comment", null, ajaxOptions, new { id = "comment-form" }))
+    {
+        @Html.Hidden("RecipeId", Model.RecipeId)
+        @Html.AntiForgeryToken()
+
+    <div id="comment-result" class="alert" style="display: none"></div>
+        @Html.ValidationMessageFor(m => m.Comment, null, new { @class = "alert alert-danger" }, "div")
+
+        <div class="row">
+            <div class="col-md-10">
+                <label>Post comment:</label>
+                @Html.TextArea("Comment", new { @class = "form-control", id = "comment-area" })
+            </div>
+            <div class="col-md-2">
+                <label></label>
+
+                <input type="submit" class="btn btn-success" value="Add comment" />
+            </div>
+        </div>
+    }
+}
+
+<script>
+    function onSuccess(result) {
+        $('#comment-area').val('');
+        $('#comment-result')
+            .removeClass('alert-danger')
+            .addClass('alert-success')
+            .text('Comment is posted succesfully')
+            .fadeIn(500).delay(2000).fadeOut(500)
+    }
+    function onFailure(result) {
+        $('#comment-result')
+            .removeClass('alert-danger')
+            .addClass('alert-danger')
+            .text(result.statusText)
+            .fadeIn();
+    }
+</script>

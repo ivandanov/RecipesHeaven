@@ -24,23 +24,24 @@
             this.recipeService = recipeService;
         }
 
+        [HttpPost]
         [Authorize]
         [ValidateAntiForgeryToken]
         public ActionResult PostComment(CommentInputViewModel model)
         {
             if (model == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest, "No data received");
             }
 
             if (ModelState.IsValid)
             {
+                var userId = this.User.Identity.GetUserId();
                 try
                 {
                     var recipe = recipeService.GetRecipeById(model.RecipeId);
                     if (recipe != null)
                     {
-                        var userId = this.User.Identity.GetUserId();
                         var comment = commentService.PostComment(recipe.Id, userId, model.Comment);
                         var commentViewModel = Mapper.Map<Comment, CommentViewModel>(comment);
                         return PartialView("_SingleCommentPartial", commentViewModel);
@@ -53,27 +54,27 @@
                 catch (Exception)
                 {
                     //TODO: log4net log
-                    ModelState.AddModelError("CommentDataError", "There was an error while saving your comment. Please try again later.");
-                    return new HttpStatusCodeResult(HttpStatusCode.InternalServerError);
+                    return new HttpStatusCodeResult(HttpStatusCode.InternalServerError, 
+                        "There was an error while saving your comment. Please try again later.");
                 }
             }
 
-            return new HttpStatusCodeResult(HttpStatusCode.BadRequest, ModelState.Values.First().ToString());
+            return new HttpStatusCodeResult(HttpStatusCode.BadRequest, "Your comment has bad format");
         }
 
         public ActionResult GetCommentsByRecipeId()
         {
-            return null;
+            throw new NotImplementedException();
         }
 
         public ActionResult DeleteComment()
         {
-            return null;
+            throw new NotImplementedException();
         }
 
         public ActionResult ModifyComment()
         {
-            return null;
+            throw new NotImplementedException();
         }
     }
 }
