@@ -11,6 +11,7 @@
     using RecipesHeaven.Web.ViewModels.Comment;
     using System.Web;
     using RecipesHeaven.Web.Infrastructure.ImageProcessing;
+    using System.Text;
 
     public class RecipeViewModel : BaseViewModel, IMapFrom<Models.Recipe>, IHaveCustomMappings
     {
@@ -40,15 +41,16 @@
 
         public void CreateMappings(IConfiguration configuration)
         {
-            var imagePath = HttpContext.Current.Server.MapPath(ImageConfiguration.UploadedImagesPath);
-
+            //Default path: /Content/UserImages/            
+            var uploadedImagePath = ImageConfiguration.UploadedImagesPath.TrimStart('~');
+            
             configuration.CreateMap<Models.Recipe, RecipeViewModel>()
                 .ForMember(vm => vm.AuthorId, op => op.MapFrom(r => r.Author.Id))
                 .ForMember(vm => vm.AuthorName, op => op.MapFrom(r => r.Author.UserName))
                 .ForMember(vm => vm.CategoryId, op => op.MapFrom(r => r.Category.Id))
                 .ForMember(vm => vm.CategoryName, op => op.MapFrom(r => r.Category.Name))
                 .ForMember(vm => vm.NumberOfComments, op => op.MapFrom(r => r.Comments.Count))
-                .ForMember(vm => vm.ImageUrl, op => op.MapFrom(r => imagePath + r.ImageUrl));
+                .ForMember(vm => vm.ImageUrl, op => op.MapFrom(r => uploadedImagePath + r.ImageUrl));
         }
     }
 }
