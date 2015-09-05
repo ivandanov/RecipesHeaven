@@ -9,7 +9,8 @@
 <h2>New Recipe</h2>
 
 <div class="container">
-    @using (Html.BeginForm("Create", "Recipe", FormMethod.Post, new { id = "create-form", @class = "form-horizontal", role = "form" }))
+    @using (Html.BeginForm("Create", "Recipe", FormMethod.Post,
+        new { id = "create-form", @class = "form-horizontal col-md-8", role = "form", enctype = "multipart/form-data" }))
     {
         //if the form is rejected categories dropdown list should appears without getting them from db
         for (int i = 0; i < Model.PossibleCategories.Count(); i++)
@@ -38,18 +39,25 @@
             </div>
         </div>
         <div class="form-group">
-            <label class="control-label col-md-2">Add new product:</label>
+            <label class="control-label col-md-2">Add product:</label>
             <div class="input-group col-md-7">
                 <button type="button" class="btn btn-success " onclick="addProduct();">Add</button>
             </div>
         </div>
         <div class="row form-group">
-            @Html.LabelFor(r => r.PreparingSteps, new { @class = "col-md-2 control-label" })
+            @Html.LabelFor(r => r.PreparingSteps, new { @class = "col-md-   2 control-label" })
             @Html.TextAreaFor(r => r.PreparingSteps, new { @class = "form-control  col-md-4" })
             @Html.ValidationMessageFor(r => r.PreparingSteps, "", new { @class = "text-danger  col-md-4" })
         </div>
+
+        <div>Upload Image</div>
+        <input type="file" name="avatar" />
+        <input type="submit" value="upload" />
+
         <input type="submit" class="btn btn-primary" value="Submit" />
     }
+
+    <div class="col-md-4" id="photo-div" style="background-color: black; height: 150px"></div>
 </div>
 @section scripts{
     @Scripts.Render("~/bundles/jqueryval")

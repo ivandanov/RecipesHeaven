@@ -10,7 +10,7 @@
         public string RandomString(int minLength = 5, int maxLength = 50, string characters = DefaultCharacters)
         {
             var result = new StringBuilder();
-            var length = this.Next(minLength, maxLength + 1);
+            var length = this.Next(minLength, maxLength);
 
             for (int i = 0; i <= length; i++)
             {

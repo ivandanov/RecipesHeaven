@@ -32,11 +32,12 @@ namespace RecipesHeaven.Models
         [MaxLength(500)]
         public string PreparingSteps { get; set; }
 
-        [ForeignKey("Image")]
-        [Column(Order = 1)]
-        public int? ImageId { get; set; }
+        //[ForeignKey("Image")]
+        //[Column(Order = 1)]
+        //public int? ImageId { get; set; }
+        //public virtual Image Image { get; set; }
 
-        public virtual Image Image { get; set; }
+        public string ImageUrl { get; set; }
 
         public string AuthorId { get; set; }
 

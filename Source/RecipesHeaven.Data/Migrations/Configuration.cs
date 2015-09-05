@@ -18,7 +18,7 @@ namespace RecipesHeaven.Data.Migrations
         private const int DefaultNumberOfProducts = 20;
         private const int DefaultNumberOfRecipse = 10;
         private const int DefaultNumberOfComments = 10;
-        private const string DefaultRecipeImagesPath = "/Migrations/Images/Recipes";
+        //private const string DefaultRecipeImagesPath = "/Migrations/Images/Recipes";
         private readonly string[] DefaultCategories =
             new string[] { "Salads", "Main Dishes", "Fish & Seafood", "Vegetarian", "Desserts", "Beverages" };
 
@@ -130,11 +130,11 @@ namespace RecipesHeaven.Data.Migrations
             {
                 var recipe = new Recipe()
                 {
-                    Name = random.RandomString(10, 49),
+                    Name = random.RandomString(10, 50),
                     Author = someUsers[random.Next(0, someUsers.Count)],
                     Category = someCategories[random.Next(0, someCategories.Count)],
                     PreparingSteps = random.RandomString(20, 500),
-                    Image = this.GetSampleImage(DefaultRecipeImagesPath),
+                    ImageUrl = String.Empty,
                     DateAdded = DateTime.Now
                 };
 

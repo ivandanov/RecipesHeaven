@@ -67,7 +67,7 @@
                 Category = categoryEntity,
                 PreparingSteps = preparingSteps,
                 Products = productsEntity,
-                Image = null, //TODO: image processing
+                ImageUrl = imgUrl,
                 DateAdded = DateTime.Now
             };
 

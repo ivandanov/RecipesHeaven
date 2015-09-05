@@ -16,6 +16,8 @@
     using RecipesHeaven.Models;
     using RecipesHeaven.Web.ViewModels.Comment;
     using RecipesHeaven.Web.ViewModels.Product;
+    using System.Web;
+    using RecipesHeaven.Web.Infrastructure.ImageProcessing;
 
     public class RecipeController : BaseController
     {
@@ -68,18 +70,25 @@
             }
 
             var isRecipeNameFree = this.recipeService.GetRecipeByName(model.Name) == null;
-            if(!isRecipeNameFree)
+            if (!isRecipeNameFree)
             {
                 this.ModelState.AddModelError("DataError", "There is already a recipe with this name. Please check it before post your recipe");
                 return View(model);
             }
 
+            var imageName = this.SaveImage(Request.Files[0]);
+            if(imageName == null)
+            {
+                this.ModelState.AddModelError("DataError", "There is a problem with your recipe image. Please check it once again");
+                return View(model);
+            }
+            
             var userId = this.User.Identity.GetUserId();
             var products = model.Products.Select(m => m.Content);
             try
             {
                 var newRecipe = this.recipeService
-                    .Create(model.Name, userId, model.Category, model.PreparingSteps, products, String.Empty);
+                    .Create(model.Name, userId, model.Category, model.PreparingSteps, products, imageName);
 
                 return RedirectToAction("Recipe", new { id = newRecipe.Id, isCreated = true });
             }
@@ -92,6 +101,7 @@
             return View(model);
         }
 
+        
         [Authorize]
         public ActionResult MyRecipes()
         {
@@ -121,6 +131,23 @@
                 .ToList();
 
             return posibleCategories;
+        }
+
+        [NonAction]
+        private string SaveImage(HttpPostedFileBase file)
+        {
+            if (file.ContentLength > 0)
+            {
+                ImageUpload imageUpload = new ImageUpload { Width = 600 };
+                ImageResult imageResult = imageUpload.RenameUploadFile(file);
+
+                if (imageResult.Success)
+                {
+                    return imageResult.ImageName;
+                }
+            }
+
+            return null;
         }
     }
 }

@@ -206,6 +206,9 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Infrastructure\CustomValidation\CategoryAttribute.cs" />
+    <Compile Include="Infrastructure\ImageProcessing\ImageConfiguration.cs" />
+    <Compile Include="Infrastructure\ImageProcessing\ImageResult.cs" />
+    <Compile Include="Infrastructure\ImageProcessing\ImageUpload.cs" />
     <Compile Include="Infrastructure\Mapping\IHaveCustomMappings.cs" />
     <Compile Include="Infrastructure\Mapping\IMapFrom.cs" />
     <Compile Include="ViewModels\Account\ExternalLoginConfirmationViewModel.cs" />
@@ -333,6 +336,7 @@
     <Folder Include="Areas\Administration\Controllers\" />
     <Folder Include="Areas\Administration\Models\" />
     <Folder Include="Areas\Administration\Views\Shared\" />
+    <Folder Include="Content\UserImages\" />
     <Folder Include="Views\Base\" />
     <Folder Include="Views\Product\" />
   </ItemGroup>

@@ -16,7 +16,7 @@
         @Html.Hidden("RecipeId", Model.RecipeId)
         @Html.AntiForgeryToken()
 
-    <div id="comment-result" class="alert" style="display: none"></div>
+        <div id="comment-result" class="alert" style="display: none"></div>
         @Html.ValidationMessageFor(m => m.Comment, null, new { @class = "alert alert-danger" }, "div")
 
         <div class="row">
