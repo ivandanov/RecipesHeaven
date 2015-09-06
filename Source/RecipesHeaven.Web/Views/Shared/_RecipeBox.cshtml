@@ -2,21 +2,16 @@
 @using RecipesHeaven.Web.ViewModels.Recipe
 
 
-<div class="col-sm-4 col-lg-4 col-md-4">
-    <div class="thumbnail">
-        <img src="http://placehold.it/320x150" alt="">
+<div class="col-sm-4 col-lg-4 col-md-4 ">
+    <div class="thumbnail ">
+        <img src="@Model.ImageUrl" class="img-thumbnail" style="max-height:150px; width:auto" alt="">
         <div class="caption">
             <div class="recipe-name">
                 <a href="@Url.RouteUrl("Recipe", new { id = Model.Id })">@Model.Name</a>
             </div>
-
             <p>@*@Model.Description*@</p>
-
-
         </div>
-
         <div class="ratings">
-
             <p>
                 <span class="glyphicon glyphicon-star"></span>
                 <span class="glyphicon glyphicon-star"></span>
@@ -27,8 +22,7 @@
                 {
                     <span class="pull-right">@Model.NumberOfComments comments</span>
                 }
-            </p>
-                
+            </p>                
         </div>
     </div>
 </div>

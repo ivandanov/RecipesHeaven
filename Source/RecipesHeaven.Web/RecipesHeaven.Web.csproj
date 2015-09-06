@@ -255,6 +255,11 @@
     <Content Include="Content\images\sort_desc_disabled.png" />
     <Content Include="Content\jquery.dataTables.min.css" />
     <Content Include="Content\page-styles.css" />
+    <Content Include="Content\UserImages\InititialImages\1.jpg" />
+    <Content Include="Content\UserImages\InititialImages\2.jpg" />
+    <Content Include="Content\UserImages\InititialImages\3.jpg" />
+    <Content Include="Content\UserImages\InititialImages\4.jpg" />
+    <Content Include="Content\UserImages\InititialImages\5.jpg" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -336,7 +341,6 @@
     <Folder Include="Areas\Administration\Controllers\" />
     <Folder Include="Areas\Administration\Models\" />
     <Folder Include="Areas\Administration\Views\Shared\" />
-    <Folder Include="Content\UserImages\" />
     <Folder Include="Views\Base\" />
     <Folder Include="Views\Product\" />
   </ItemGroup>

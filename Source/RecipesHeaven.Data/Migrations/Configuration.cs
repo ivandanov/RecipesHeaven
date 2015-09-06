@@ -18,7 +18,9 @@ namespace RecipesHeaven.Data.Migrations
         private const int DefaultNumberOfProducts = 20;
         private const int DefaultNumberOfRecipse = 10;
         private const int DefaultNumberOfComments = 10;
-        //private const string DefaultRecipeImagesPath = "/Migrations/Images/Recipes";
+        private const string DefaultInitialImagesPath = "../../Content/UserImages/InititialImages/";
+        private const string DefaultRecipeImagesPath = "../../Content/UserImages/";
+
         private readonly string[] DefaultCategories =
             new string[] { "Salads", "Main Dishes", "Fish & Seafood", "Vegetarian", "Desserts", "Beverages" };
 
@@ -134,7 +136,7 @@ namespace RecipesHeaven.Data.Migrations
                     Author = someUsers[random.Next(0, someUsers.Count)],
                     Category = someCategories[random.Next(0, someCategories.Count)],
                     PreparingSteps = random.RandomString(20, 500),
-                    ImageUrl = String.Empty,
+                    ImageUrl = this.GetSampleImage(),
                     DateAdded = DateTime.Now
                 };
 
@@ -172,21 +174,28 @@ namespace RecipesHeaven.Data.Migrations
             context.SaveChanges();
         }
 
-        private Image GetSampleImage(string path)
+        private string GetSampleImage()
         {
             var directory = this.GetAssemblyDirectory(Assembly.GetExecutingAssembly());
-            var allImages = Directory.GetFiles(directory + path);
-            var imagePath = allImages[random.Next(0, allImages.Length)];
-            var imageExtension = imagePath.Substring(imagePath.LastIndexOf('.'));
+            var initialImagesPath = directory + DefaultInitialImagesPath;
+            var allImages = Directory
+                .EnumerateFiles(initialImagesPath, "*.jpg")
+                .Select(f => Path.GetFileName(f))
+                .ToList();
 
-            var file = File.ReadAllBytes(imagePath);
-            var image = new Image
+            var oldImageName = allImages[random.Next(0, allImages.Count())];
+            var newImageName = oldImageName;
+
+            var mainImagesPath = directory + DefaultRecipeImagesPath;
+            if (File.Exists(mainImagesPath + oldImageName))
             {
-                Content = file,
-                FileExtension = imageExtension
-            };
+                newImageName = Guid.NewGuid().ToString() + oldImageName;
+            }
 
-            return image;
+            //coppy test image to main directory for uploaded images
+            File.Copy(initialImagesPath + oldImageName, mainImagesPath + newImageName);
+
+            return newImageName;
         }
 
         private string GetAssemblyDirectory(Assembly assembly)

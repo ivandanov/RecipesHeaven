@@ -138,7 +138,7 @@
         {
             if (file.ContentLength > 0)
             {
-                ImageUpload imageUpload = new ImageUpload { Width = ImageConfiguration.Width };
+                ImageUpload imageUpload = new ImageUpload { Height = ImageConfiguration.Height };
                 ImageResult imageResult = imageUpload.RenameUploadFile(file);
 
                 if (imageResult.Success)

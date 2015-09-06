@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using RecipesHeaven.Web.Infrastructure.ImageProcessing;
 using RecipesHeaven.Web.Infrastructure.Mapping;
 using System;
 using System.Collections.Generic;
@@ -16,17 +17,15 @@ namespace RecipesHeaven.Web.ViewModels.Recipe
 
         public int NumberOfComments { get; set; }
 
-        public int? ImageId { get; set; }
+        public string ImageUrl { get; set; }
 
         public void CreateMappings(IConfiguration configuration)
         {
-            //Expression<Func<Models.Recipe, string>> shortDesc =
-            //    r => r.PreparingSteps
-            //        .Substring(0, r.PreparingSteps.Substring(0, 70).LastIndexOf(' ')) 
-            //        + "...";
-            
+            var uploadedImagePath = ImageConfiguration.UploadedImagesPath.TrimStart('~');
+
             configuration.CreateMap<Models.Recipe, RecipeOverviewModel>()
-                .ForMember(vm => vm.NumberOfComments, op => op.MapFrom(r => r.Comments.Count));
+                .ForMember(vm => vm.NumberOfComments, op => op.MapFrom(r => r.Comments.Count))
+                .ForMember(vm => vm.ImageUrl, op => op.MapFrom(r => uploadedImagePath + r.ImageUrl));
         }
     }
 }

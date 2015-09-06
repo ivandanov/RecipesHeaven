@@ -76,21 +76,11 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
-    <Content Include="Migrations\Images\Recipes\banica.jpg">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Migrations\Images\Recipes\kartofi.jpg">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Migrations\Images\Recipes\kozunak.jpeg">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Migrations\Images\Recipes\musaka.jpg">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Migrations\Images\Recipes\torta.jpg">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
+    <Content Include="Migrations\Images\Recipes\1.jpg" />
+    <Content Include="Migrations\Images\Recipes\2.jpg" />
+    <Content Include="Migrations\Images\Recipes\3.jpg" />
+    <Content Include="Migrations\Images\Recipes\4.jpg" />
+    <Content Include="Migrations\Images\Recipes\5.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
