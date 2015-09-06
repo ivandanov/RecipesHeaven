@@ -194,3 +194,14 @@ FakesAssemblies/
 
 # Visual Studio 6 workspace options file
 *.opt
+
+# Windows image file caches
+Thumbs.db
+ehthumbs.db
+
+# Folder config file
+Desktop.ini
+
+# User uploaded images
+/Source/RecipesHeaven.Web/Content/UserImages/*
+!/Source/RecipesHeaven.Web/Content/UserImages/InitialImages/
