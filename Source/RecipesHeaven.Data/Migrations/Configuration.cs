@@ -18,7 +18,7 @@ namespace RecipesHeaven.Data.Migrations
         private const int DefaultNumberOfProducts = 20;
         private const int DefaultNumberOfRecipse = 10;
         private const int DefaultNumberOfComments = 10;
-        private const string DefaultInitialImagesPath = "../../Content/UserImages/InititialImages/";
+        private const string DefaultInitialImagesPath = "../../Content/UserImages/InitialImages/";
         private const string DefaultRecipeImagesPath = "../../Content/UserImages/";
 
         private readonly string[] DefaultCategories =

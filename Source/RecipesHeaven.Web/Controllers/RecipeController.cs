@@ -76,6 +76,12 @@
                 return View(model);
             }
 
+            if(Request.Files.Count != 1)
+            {
+                this.ModelState.AddModelError("DataError", "You should select one image for the recipe");
+                return View(model);
+            }
+
             var imageName = this.SaveImage(Request.Files[0]);
             if(imageName == null)
             {

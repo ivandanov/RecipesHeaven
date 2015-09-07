@@ -255,11 +255,11 @@
     <Content Include="Content\images\sort_desc_disabled.png" />
     <Content Include="Content\jquery.dataTables.min.css" />
     <Content Include="Content\page-styles.css" />
-    <Content Include="Content\UserImages\InititialImages\1.jpg" />
-    <Content Include="Content\UserImages\InititialImages\2.jpg" />
-    <Content Include="Content\UserImages\InititialImages\3.jpg" />
-    <Content Include="Content\UserImages\InititialImages\4.jpg" />
-    <Content Include="Content\UserImages\InititialImages\5.jpg" />
+    <Content Include="Content\UserImages\InitialImages\1.jpg" />
+    <Content Include="Content\UserImages\InitialImages\2.jpg" />
+    <Content Include="Content\UserImages\InitialImages\3.jpg" />
+    <Content Include="Content\UserImages\InitialImages\4.jpg" />
+    <Content Include="Content\UserImages\InitialImages\5.jpg" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />

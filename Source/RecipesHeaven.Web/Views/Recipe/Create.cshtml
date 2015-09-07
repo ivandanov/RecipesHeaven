@@ -10,54 +10,67 @@
 
 <div class="container">
     @using (Html.BeginForm("Create", "Recipe", FormMethod.Post,
-        new { id = "create-form", @class = "form-horizontal col-md-8", role = "form", enctype = "multipart/form-data" }))
+        new { id = "create-form", @class = "form-horizontal col-md-12", role = "form", enctype = "multipart/form-data" }))
     {
-        //if the form is rejected categories dropdown list should appears without getting them from db
-        for (int i = 0; i < Model.PossibleCategories.Count(); i++)
-        {
-            @Html.HiddenFor(m => m.PossibleCategories[i]);
-        }
+        <div class="row">
+            <div class="col-md-6">
+                @*if the form is rejected categories dropdown list should appears without getting them from db*@
+                @for (int i = 0; i < Model.PossibleCategories.Count(); i++)
+                {
+                    @Html.HiddenFor(m => m.PossibleCategories[i]);
+                }
 
-        @Html.AntiForgeryToken()
-        @Html.ValidationMessage("DataError", new { @class = "alert alert-danger" }, "div")
-        <div class="form-group">
-            @Html.LabelFor(r => r.Name, new { @class = "col-md-2 control-label" })
-            @Html.TextBoxFor(r => r.Name, new { @class = "form-control  col-md-4" })
-            @Html.ValidationMessageFor(r => r.Name, "", new { @class = "text-danger  col-md-4" })
-        </div>
-        <div class="form-group">
-            @Html.LabelFor(r => r.Category, new { @class = "col-md-2 control-label" })
-            @Html.DropDownListFor(r => r.Category, new SelectList(Model.PossibleCategories), new { @class = "form-control  col-md-4" })
-            @Html.ValidationMessageFor(r => r.Category, "", new { @class = "text-danger  col-md-4" })
-        </div>
-        <div class="form-horizontal">
-            <div id="products">
+                @Html.AntiForgeryToken()
+                @Html.ValidationMessage("DataError", new { @class = "alert alert-danger" }, "div")
                 <div class="form-group">
-                    @Html.Label("Product 1:", new { @class = "col-md-2 control-label" })
-                    @Html.EditorFor(r => r.Products)
+                    @Html.LabelFor(r => r.Name, new { @class = "col-md-3 control-label" })
+                    @Html.TextBoxFor(r => r.Name, new { @class = "form-control  col-md-4" })
+                    @Html.ValidationMessageFor(r => r.Name, "", new { @class = "text-danger  col-md-4" })
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(r => r.Category, new { @class = "col-md-3 control-label" })
+                    @Html.DropDownListFor(r => r.Category, new SelectList(Model.PossibleCategories), new { @class = "form-control  col-md-4" })
+                    @Html.ValidationMessageFor(r => r.Category, "", new { @class = "text-danger  col-md-4" })
+                </div>
+                <div class="form-horizontal">
+                    <div id="products">
+                        <div class="form-group">
+                            @Html.Label("Product 1:", new { @class = "col-md-3 control-label" })
+                            @Html.EditorFor(r => r.Products)
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-md-3">Add product:</label>
+                    <div class="input-group col-md-7">
+                        <button type="button" class="btn btn-success " onclick="addProduct();">Add</button>
+                    </div>
+                </div>
+            </div>
+            <div class="com-md-5">
+                <label class="control-label col-md-2">Upload Image:</label>
+
+                <div class="input-group">
+                    <span class="input-group-btn">
+                        <span class="btn btn-primary btn-file">
+                            Browse… <input type="file" name="recipe-image">
+                        </span>
+                    </span>
+                    <input type="text" class="form-control" readonly="">
                 </div>
             </div>
         </div>
-        <div class="form-group">
-            <label class="control-label col-md-2">Add product:</label>
-            <div class="input-group col-md-7">
-                <button type="button" class="btn btn-success " onclick="addProduct();">Add</button>
-            </div>
-        </div>
+
         <div class="row form-group">
             @Html.LabelFor(r => r.PreparingSteps, new { @class = "col-md-   2 control-label" })
             @Html.TextAreaFor(r => r.PreparingSteps, new { @class = "form-control  col-md-4" })
             @Html.ValidationMessageFor(r => r.PreparingSteps, "", new { @class = "text-danger  col-md-4" })
         </div>
+        <input type="submit" class="btn btn-primary btn-lg center-block" value="Submit" />
 
-        <div>Upload Image</div>
-        <input type="file" name="avatar" />
-        <input type="submit" value="upload" />
-
-        <input type="submit" class="btn btn-primary" value="Submit" />
     }
 
-    <div class="col-md-4" id="photo-div" style="background-color: black; height: 150px"></div>
+    @*<div class="col-md-4" id="photo-div" style="background-color: black; height: 150px"></div>*@
 </div>
 @section scripts{
     @Scripts.Render("~/bundles/jqueryval")
@@ -92,5 +105,25 @@
             form.removeData('unobtrusiveValidation');
             $.validator.unobtrusive.parse(form);
         };
+
+        $(document).on('change', '.btn-file :file', function () {
+            var input = $(this), numFiles = input.get(0).files ? input.get(0).files.length : 1, label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
+            input.trigger('fileselect', [
+                numFiles,
+                label
+            ]);
+        });
+        $(document).ready(function () {
+            $('.btn-file :file').on('fileselect', function (event, numFiles, label) {
+                var input = $(this).parents('.input-group').find(':text'), log = numFiles > 1 ? numFiles + ' files selected' : label;
+                if (input.length) {
+                    input.val(log);
+                } else {
+                    if (log)
+                        alert(log);
+                }
+            });
+        });
     </script>
 }
+

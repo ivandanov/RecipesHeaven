@@ -54,7 +54,7 @@
         {
             get { return this.GetRepository<User>(); }
         }
-        
+
         public int SaveChanges()
         {
             return this.context.SaveChanges();
@@ -81,7 +81,6 @@
             if (!this.repositories.ContainsKey(typeof(T)))
             {
                 var type = typeof(GenericRepository<T>);
-
                 this.repositories.Add(typeof(T), Activator.CreateInstance(type, this.context));
             }
 
