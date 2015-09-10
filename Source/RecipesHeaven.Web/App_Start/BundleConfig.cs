@@ -23,19 +23,21 @@ namespace RecipesHeaven.Web
                       "~/Scripts/respond.js"));
             bundles.Add(new ScriptBundle("~/bundles/dataTables").Include(
                   "~/Scripts/jquery.dataTables.min.js"));
+            bundles.Add(new ScriptBundle("~/bundles/raty").Include(
+                  "~/Scripts/jquery.raty.js"));
         }
 
         private static void RegisterStylesBundles(BundleCollection bundles)
         {
             bundles.Add(new StyleBundle("~/Content/page-styles").Include(
                       "~/Content/page-styles.css"));
-
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
                       "~/Content/site.css"));
-
             bundles.Add(new StyleBundle("~/Content/dataTables").Include(
                   "~/Content/jquery.dataTables.min.css"));
+            bundles.Add(new StyleBundle("~/Content/raty").Include(
+                  "~/Content/jquery.raty.css"));
         }
     }
 }
