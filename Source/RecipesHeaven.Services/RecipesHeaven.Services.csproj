@@ -61,12 +61,17 @@
     <Compile Include="Contracts\IProductService.cs" />
     <Compile Include="Contracts\IRecipeService.cs" />
     <Compile Include="Contracts\IUserService.cs" />
+    <Compile Include="LikeService.cs" />
     <Compile Include="ProductService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RecipeService.cs" />
     <Compile Include="UserService.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\RecipesHeaven.Common\RecipesHeaven.Common.csproj">
+      <Project>{dd657ac4-5501-4389-954d-a9ede04128e5}</Project>
+      <Name>RecipesHeaven.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\RecipesHeaven.Data\RecipesHeaven.Data.csproj">
       <Project>{a2b1893f-e544-419d-9fb5-c466897e667b}</Project>
       <Name>RecipesHeaven.Data</Name>

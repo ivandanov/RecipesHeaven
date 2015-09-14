@@ -12,12 +12,12 @@ namespace RecipesHeaven.Models
     {
         private ICollection<Product> products;
         private ICollection<Comment> comments;
-        private ICollection<byte> rating;
+        private ICollection<Like> rating;
         
         public Recipe()
         {
             this.Products = new HashSet<Product>();
-            this.Rating = new HashSet<byte>();
+            this.Rating = new HashSet<Like>();
             this.Comments = new HashSet<Comment>(); 
         }
 
@@ -56,7 +56,7 @@ namespace RecipesHeaven.Models
             set { this.products = value; }
         }
 
-        public virtual ICollection<byte> Rating
+        public virtual ICollection<Like> Rating
         {
             get { return this.rating; }
             set { this.rating = value; }

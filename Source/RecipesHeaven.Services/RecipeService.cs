@@ -92,7 +92,7 @@
             return this.Data
                 .Recipes
                 .All()
-                .OrderByDescending(r => r.Rating.Average(a => a / r.Rating.Count))
+                .OrderByDescending(r => r.Rating.Average(a => a.Value))
                 .Take(numberOfRecipes)
                 .ToList();
         }
@@ -137,7 +137,7 @@
                 .Recipes
                 .All()
                 .Where(containsAllProductsInRecipe)
-                .OrderByDescending(r => r.Rating.Average(a => a / r.Rating.Count))
+                .OrderByDescending(r => r.Rating.Average(a => a.Value))
                 .Skip(pageIndex * pageSize)
                 .Take(pageSize)
                 .ToList();
