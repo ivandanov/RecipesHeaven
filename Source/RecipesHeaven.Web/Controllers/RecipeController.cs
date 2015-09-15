@@ -18,6 +18,7 @@
     using RecipesHeaven.Web.ViewModels.Product;
     using System.Web;
     using RecipesHeaven.Web.Infrastructure.ImageProcessing;
+    using RecipesHeaven.Common;
 
     public class RecipeController : BaseController
     {
@@ -41,7 +42,10 @@
             }
 
             var recipeModel = Mapper.Map<RecipeViewModel>(recipe);
-
+            
+            var userId = this.User.Identity.GetUserId();
+            recipeModel.IsCurrentUserRatedThis = recipe.Rating.Any(l => l.UserId == userId);
+            
             return View("RecipeDetails", recipeModel);
         }
 
@@ -76,19 +80,19 @@
                 return View(model);
             }
 
-            if(Request.Files.Count != 1)
+            if (Request.Files.Count != 1)
             {
                 this.ModelState.AddModelError("DataError", "You should select one image for the recipe");
                 return View(model);
             }
 
             var imageName = this.SaveImage(Request.Files[0]);
-            if(imageName == null)
+            if (imageName == null)
             {
                 this.ModelState.AddModelError("DataError", "There is a problem with your recipe image. Please check it once again");
                 return View(model);
             }
-            
+
             var userId = this.User.Identity.GetUserId();
             var products = model.Products.Select(m => m.Content);
             try
@@ -98,16 +102,21 @@
 
                 return RedirectToAction("Recipe", new { id = newRecipe.Id, isCreated = true });
             }
+            catch (RecipesHeavenException ex)
+            {
+                this.ModelState.AddModelError("DataError", ex.Message);
+            }
             catch (Exception)
             {
                 //TODO: log4net log error
-                this.ModelState.AddModelError("DataError", "There was an error while saving your recipe. Please try again later.");
+                this.ModelState.AddModelError("DataError", 
+                    "There was an error while saving your recipe. Please try again later.");
             }
 
             return View(model);
         }
 
-        
+
         [Authorize]
         public ActionResult MyRecipes()
         {

@@ -1,9 +1,13 @@
 ﻿namespace RecipesHeaven.Models
 {
     using System.ComponentModel.DataAnnotations;
+    using System.ComponentModel.DataAnnotations.Schema;
 
     public class Like
     {
+        [NotMapped]
+        public static byte DefaultRatingValue { get { return 3; } }
+
         [Key]
         public int Id { get; set; }
 

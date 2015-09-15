@@ -6,6 +6,11 @@
     ViewBag.Title = "Recipe details";
 }
 
+<div id="test">
+</div>
+
+
+
 <div class="container">
     @{Html.RenderAction("GetCategories", "Category");}
     <div class="col-md-9">
@@ -33,19 +38,16 @@
                 }
                 <p> @Model.PreparingSteps</p>
             </div>
-            <div class="ratings">
-                <p class="pull-right">@Model.NumberOfComments comments</p>
-                <p>
-                    <span class="glyphicon glyphicon-star"></span>
-                    <span class="glyphicon glyphicon-star"></span>
-                    <span class="glyphicon glyphicon-star"></span>
-                    <span class="glyphicon glyphicon-star"></span>
-                    <span class="glyphicon glyphicon-star-empty"></span>
-                    4.0 stars
-                </p>
-            </div>
-        </div>
 
+
+        </div>
+        <div id="rating-result" class="alert" style="display: none"></div>
+        <div class="well" id="rating-block">
+            @Html.AntiForgeryToken()
+            <label>Rating:</label>
+            <div id="rating" style="display:inline-block"></div>
+            <p class="pull-right">@Model.NumberOfComments comments</p>
+        </div>
         <div class="well">
 
             @{
@@ -57,7 +59,7 @@
             @if (Model.Comments.Count() > 0)
             {
                 <div id="comments">
-                    @foreach (var comment in Model.Comments)
+                    @foreach (var comment in Model.Comments.Reverse())
                     {
                         @Html.Partial("../../Views/Comment/_SingleCommentPartial", comment)
                     }
@@ -80,5 +82,58 @@
 
 @section scripts {
     @Scripts.Render("~/bundles/jqueryval")
-    <script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
+    @Scripts.Render("~/bundles/jqueryUnobtrusiveAjax")
+    @Scripts.Render("~/bundles/raty")
+
+    <script>
+        var antiForgery = $('#rating-block input[name="__RequestVerificationToken"] ').val();
+        var recipeId = @Model.Id;
+
+        $('#rating').raty({
+            path: '/content/images',
+            score: @Model.Rating,
+            readOnly: @((Model.IsCurrentUserRatedThis || !User.Identity.IsAuthenticated).ToString().ToLower()),
+            click: onRate,
+        });
+
+        function onRate(value) {
+            if (value < 1 || value > 5) {
+                alert('Wrong rating value!');
+                return false;
+            }
+
+            var data = {
+                ratedValue: value,
+                recipeId: recipeId,
+                antiForgery: antiForgery
+            };
+
+            $.ajax({
+                url: '/Rating/LikeRecipe',
+                type: 'POST',
+                data: data,
+                success: onSuccesRate,
+                error: onFailRate
+            });
+        }
+
+        function onSuccesRate() {
+            $('#rating-result')
+                    .removeClass('alert-danger')
+                    .addClass('alert-success')
+                    .text('Recipe is rated')
+                    .fadeIn(500).delay(2000).fadeOut(500);
+            return true;
+        }
+
+        function onFailRate(result) {
+            $('#rating-result')
+                    .removeClass('alert-danger')
+                    .addClass('alert-danger')
+                    .text(result.statusText)
+                    .fadeIn();
+            return false;
+        }
+
+    </script>
 }

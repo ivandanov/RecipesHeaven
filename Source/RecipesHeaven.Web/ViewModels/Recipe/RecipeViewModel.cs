@@ -26,8 +26,12 @@
         public int CategoryId { get; set; }
 
         public string CategoryName { get; set; }
+        
+        public int Rating { get; set; }
 
         public int NumberOfComments { get; set; }
+
+        public bool IsCurrentUserRatedThis { get; set; }
 
         public DateTime DateAdded { get; set; }
 
@@ -50,6 +54,7 @@
                 .ForMember(vm => vm.CategoryId, op => op.MapFrom(r => r.Category.Id))
                 .ForMember(vm => vm.CategoryName, op => op.MapFrom(r => r.Category.Name))
                 .ForMember(vm => vm.NumberOfComments, op => op.MapFrom(r => r.Comments.Count))
+                .ForMember(vm => vm.Rating, op => op.MapFrom(r => Convert.ToInt32(r.Rating.Average(l => l.Value))))
                 .ForMember(vm => vm.ImageUrl, op => op.MapFrom(r => uploadedImagePath + r.ImageUrl));
         }
     }

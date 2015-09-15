@@ -1,6 +1,7 @@
 ﻿namespace RecipesHeaven.Web.ViewModels.Product
 {
-using System.ComponentModel.DataAnnotations;
+    using System.ComponentModel.DataAnnotations;
+
     public class ProductInputViewModel
     {
         [Required(ErrorMessage = "This product field is empty")]

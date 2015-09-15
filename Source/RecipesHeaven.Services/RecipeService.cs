@@ -11,6 +11,7 @@
     using RecipesHeaven.Models;
     using RecipesHeaven.Data.Contracts;
     using RecipesHeaven.Services.Contracts;
+    using RecipesHeaven.Common;
 
     public class RecipeService : BaseService, IRecipeService
     {
@@ -47,16 +48,18 @@
             var categoryEntity = categoryServices.GetCategoryByName(category);
             if(categoryEntity == null)
             {
-                throw new ObjectNotFoundException(string.Format("\"{0}\" category doesn't exist", category));
+                throw new RecipesHeavenException(
+                    string.Format("\"{0}\" category doesn't exist", category));
             }
 
             var isNameFree = this.GetRecipeByName(name) == null;
             if(!isNameFree)
             {
-                throw new InvalidOperationException(string.Format("There is already a recipe with name: {0}", name));
+                throw new RecipesHeavenException(
+                    "There is already a recipe with this name. Please check it before post your recipe");
             }
 
-            var productsEntity = products
+            var productsEntities = products
                 .Select(pr => new Product() { Content = pr })
                 .ToList();
 
@@ -66,10 +69,13 @@
                 AuthorId = authorId,
                 Category = categoryEntity,
                 PreparingSteps = preparingSteps,
-                Products = productsEntity,
+                Products = productsEntities,
                 ImageUrl = imgUrl,
                 DateAdded = DateTime.Now
             };
+
+            //default rating from author
+            newRecipe.Rating.Add(new Like() { Value = Like.DefaultRatingValue, UserId = authorId });
 
             this.Data.Recipes.Add(newRecipe);
             this.Data.SaveChanges();

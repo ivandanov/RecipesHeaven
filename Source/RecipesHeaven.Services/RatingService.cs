@@ -8,7 +8,7 @@
     using RecipesHeaven.Services.Contracts;
     using RecipesHeaven.Common;
 
-    public class LikeService : BaseService
+    public class RatingService : BaseService, IRatingService
     {
         private const int LikeMinValue = 1;
         private const int LikeMaxValue = 5;
@@ -16,14 +16,14 @@
         private IRecipeService recipeService;
         private UserService userService;
 
-        public LikeService(IRecipesHeavenData data, IRecipeService recipeService, UserService userService)
+        public RatingService(IRecipesHeavenData data, IRecipeService recipeService, UserService userService)
             : base(data)
         {
             this.recipeService = recipeService;
             this.userService = userService;
         }
 
-        public void LikeRecipe(int recipeId, string userId, int value)
+        public Like RateRecipe(int recipeId, string userId, int value)
         {
             var recipe = this.recipeService.GetRecipeById(recipeId);
             if(recipe == null)
@@ -58,6 +58,8 @@
 
             recipe.Rating.Add(like);
             this.Data.SaveChanges();
+
+            return like;
         }
     }
 }

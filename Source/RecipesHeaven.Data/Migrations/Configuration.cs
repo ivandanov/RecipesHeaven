@@ -130,10 +130,11 @@ namespace RecipesHeaven.Data.Migrations
 
             for (int i = 0; i < numberOfRecipes; i++)
             {
+                var someAuthorId = someUsers[random.Next(0, someUsers.Count)].Id;
                 var recipe = new Recipe()
                 {
                     Name = random.RandomString(10, 50),
-                    Author = someUsers[random.Next(0, someUsers.Count)],
+                    AuthorId = someAuthorId,
                     Category = someCategories[random.Next(0, someCategories.Count)],
                     PreparingSteps = random.RandomString(20, 500),
                     ImageUrl = this.GetSampleImage(),
@@ -141,7 +142,8 @@ namespace RecipesHeaven.Data.Migrations
                 };
 
                 var numberOfProducts = random.Next(1, someProducts.Count);
-                recipe.Products = new List<Product>(someProducts.Take(numberOfProducts).ToList());
+                recipe.Products = someProducts.Take(numberOfProducts).ToList();
+                recipe.Rating.Add(new Like() { Value = Like.DefaultRatingValue, UserId = someAuthorId });
 
                 context.Recipes.Add(recipe);
             }
