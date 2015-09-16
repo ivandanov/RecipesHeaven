@@ -24,8 +24,6 @@
 
         public virtual IDbSet<Category> Categories { get; set; }
 
-        public virtual IDbSet<Image> Images { get; set; }
-
         public static RecipesHeavenDbContext Create()
         {
             return new RecipesHeavenDbContext();
@@ -42,12 +40,12 @@
             var entities = this.ChangeTracker
                 .Entries()
                 .Where(e => e.Entity is ICreatableEntity
-                        && ((e.State == EntityState.Added) 
+                        && ((e.State == EntityState.Added)
                             || (e.State == EntityState.Modified)));
 
             foreach (var entry in entities)
             {
-                var entity = (ICreatableEntity) entry.Entity;
+                var entity = (ICreatableEntity)entry.Entity;
 
                 if (entry.State == EntityState.Added)
                 {

@@ -35,11 +35,6 @@
             get { return this.GetRepository<Comment>(); }
         }
 
-        public IRepository<Image> Images
-        {
-            get { return this.GetRepository<Image>(); }
-        }
-
         public IRepository<Recipe> Recipes
         {
             get { return this.GetRepository<Recipe>(); }

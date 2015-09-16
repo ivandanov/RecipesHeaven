@@ -226,7 +226,6 @@
     <Compile Include="ViewModels\Category\CategoryViewModel.cs" />
     <Compile Include="ViewModels\Comment\CommentInputViewModel.cs" />
     <Compile Include="ViewModels\Comment\CommentViewModel.cs" />
-    <Compile Include="ViewModels\Comment\RecipeCommentsViewModel.cs" />
     <Compile Include="ViewModels\Home\IndexRecipesViewModel.cs" />
     <Compile Include="ViewModels\Manage\AddPhoneNumberViewModel.cs" />
     <Compile Include="ViewModels\Manage\ChangePasswordViewModel.cs" />

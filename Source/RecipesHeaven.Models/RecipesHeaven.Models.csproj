@@ -57,7 +57,6 @@
     <Compile Include="Category.cs" />
     <Compile Include="Comment.cs" />
     <Compile Include="Contracts\ICreatableEntity.cs" />
-    <Compile Include="Image.cs" />
     <Compile Include="Like.cs" />
     <Compile Include="Product.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
