@@ -15,7 +15,7 @@
     public class RatingController : Controller
     {
         [HttpPost]
-        //[ValidateAntiForgeryToken]
+        [ValidateAntiForgeryToken]
         public ActionResult LikeRecipe(RecipeRatingViewModel model)
         {
             if (!ModelState.IsValid)

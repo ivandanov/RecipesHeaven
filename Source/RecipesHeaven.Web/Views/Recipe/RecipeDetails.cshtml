@@ -51,7 +51,7 @@
         <div class="well">
 
             @{
-                var commentInput = new CommentInputViewModel();
+                var commentInput = new CommentInputViewModel() { RecipeId = Model.Id };
                 commentInput.RecipeId = Model.Id;
                 Html.RenderPartial("../../Views/Comment/_CommentInputPartial", commentInput);
             }
@@ -66,7 +66,7 @@
                 </div>
             }
         </div>
-        @{
+        @*@{
             var commentModel = new RecipeCommentsViewModel()
             {
                 Comments = Model.Comments,
@@ -75,7 +75,7 @@
             };
 
     //Html.RenderPartial("../../Views/Comment/_CommentsPartial", commentModel);
-        }
+        }*@
     </div>
 
 </div>
@@ -105,7 +105,7 @@
             var data = {
                 ratedValue: value,
                 recipeId: recipeId,
-                antiForgery: antiForgery
+                __RequestVerificationToken: antiForgery
             };
 
             $.ajax({
@@ -123,10 +123,11 @@
                     .addClass('alert-success')
                     .text('Recipe is rated')
                     .fadeIn(500).delay(2000).fadeOut(500);
-            return true;
+            $('#rating').raty('readOnly', true);
         }
 
         function onFailRate(result) {
+            alert(result);
             $('#rating-result')
                     .removeClass('alert-danger')
                     .addClass('alert-danger')
