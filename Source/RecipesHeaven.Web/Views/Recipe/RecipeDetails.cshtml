@@ -6,11 +6,6 @@
     ViewBag.Title = "Recipe details";
 }
 
-<div id="test">
-</div>
-
-
-
 <div class="container">
     @{Html.RenderAction("GetCategories", "Category");}
     <div class="col-md-9">
@@ -38,8 +33,6 @@
                 }
                 <p> @Model.PreparingSteps</p>
             </div>
-
-
         </div>
         <div id="rating-result" class="alert" style="display: none"></div>
         <div class="well" id="rating-block">
@@ -49,10 +42,9 @@
             <p class="pull-right">@Model.NumberOfComments comments</p>
         </div>
         <div class="well">
-
-            @{
+            @if (User.Identity.IsAuthenticated)
+            {
                 var commentInput = new CommentInputViewModel() { RecipeId = Model.Id };
-                commentInput.RecipeId = Model.Id;
                 Html.RenderPartial("../../Views/Comment/_CommentInputPartial", commentInput);
             }
 
@@ -66,18 +58,7 @@
                 </div>
             }
         </div>
-        @*@{
-            var commentModel = new RecipeCommentsViewModel()
-            {
-                Comments = Model.Comments,
-                RecipeId = Model.Id,
-                RecipeName = Model.Name
-            };
-
-    //Html.RenderPartial("../../Views/Comment/_CommentsPartial", commentModel);
-        }*@
     </div>
-
 </div>
 
 @section scripts {
@@ -92,7 +73,7 @@
         $('#rating').raty({
             path: '/content/images',
             score: @Model.Rating,
-            readOnly: @((Model.IsCurrentUserRatedThis || !User.Identity.IsAuthenticated).ToString().ToLower()),
+            readOnly: @((!User.Identity.IsAuthenticated || Model.IsCurrentUserRatedThis).ToString().ToLower()),
             click: onRate,
         });
 
@@ -135,6 +116,5 @@
                     .fadeIn();
             return false;
         }
-
     </script>
 }
