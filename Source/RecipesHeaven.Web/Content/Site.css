@@ -27,6 +27,10 @@ select {
     display: none;
 }
 
+#rating-block img {
+    width: auto;
+}
+
 .recipe-name {
     text-align: center;
     font-weight: bold;

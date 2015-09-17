@@ -17,6 +17,8 @@ namespace RecipesHeaven.Web.ViewModels.Recipe
 
         public int NumberOfComments { get; set; }
 
+        public int Rating { get; set; }
+
         public string ImageUrl { get; set; }
 
         public void CreateMappings(IConfiguration configuration)
@@ -25,6 +27,7 @@ namespace RecipesHeaven.Web.ViewModels.Recipe
 
             configuration.CreateMap<Models.Recipe, RecipeOverviewModel>()
                 .ForMember(vm => vm.NumberOfComments, op => op.MapFrom(r => r.Comments.Count))
+                .ForMember(vm => vm.Rating, op => op.MapFrom(r => Convert.ToInt32(r.Rating.Average(l => l.Value))))
                 .ForMember(vm => vm.ImageUrl, op => op.MapFrom(r => uploadedImagePath + r.ImageUrl));
         }
     }

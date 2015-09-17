@@ -4,6 +4,6 @@
 <div class="row">
     @foreach (var recipe in Model)
     {
-        Html.RenderPartial("_RecipeBox", recipe);
+        @Html.Partial("_RecipeBox", recipe);
     }
 </div>

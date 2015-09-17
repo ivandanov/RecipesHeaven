@@ -1,7 +1,6 @@
 ﻿@model RecipeOverviewModel
 @using RecipesHeaven.Web.ViewModels.Recipe
 
-
 <div class="col-sm-4 col-lg-4 col-md-4 ">
     <div class="thumbnail ">
         <img src="@Model.ImageUrl" class="img-thumbnail" style="max-height:150px; width:auto" alt="">
@@ -9,20 +8,20 @@
             <div class="recipe-name">
                 <a href="@Url.RouteUrl("Recipe", new { id = Model.Id })">@Model.Name</a>
             </div>
-            <p>@*@Model.Description*@</p>
         </div>
-        <div class="ratings">
-            <p>
-                <span class="glyphicon glyphicon-star"></span>
-                <span class="glyphicon glyphicon-star"></span>
-                <span class="glyphicon glyphicon-star"></span>
-                <span class="glyphicon glyphicon-star-empty"></span>
-                <span class="glyphicon glyphicon-star-empty"></span>
-                @if (Model.NumberOfComments > 0)
-                {
-                    <span class="pull-right">@Model.NumberOfComments comments</span>
-                }
-            </p>                
+        <div class="ratings" id="rating-block">
+            <div id="rating-@Model.Id" style="display:inline-block; "></div>
+            @if (Model.NumberOfComments > 0)
+            {
+                <p class="pull-right">@Model.NumberOfComments comments</p>
+            }
         </div>
     </div>
 </div>
+
+<script>
+    $('#rating-@Model.Id').raty({
+        score: @Model.Rating,
+        readOnly: true,
+    });
+</script>

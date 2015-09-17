@@ -71,7 +71,6 @@
         var recipeId = @Model.Id;
 
         $('#rating').raty({
-            path: '/content/images',
             score: @Model.Rating,
             readOnly: @((!User.Identity.IsAuthenticated || Model.IsCurrentUserRatedThis).ToString().ToLower()),
             click: onRate,
