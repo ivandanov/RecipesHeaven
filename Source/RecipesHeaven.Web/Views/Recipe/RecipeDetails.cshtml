@@ -12,7 +12,6 @@
         <div class="thumbnail">
             <img class="img-responsive" style="max-height:300px; width:auto" src="@Model.ImageUrl" alt="">
             <div class="caption-full">
-                @*<h4 class="pull-right">$24.99</h4>*@
                 <h4>
                     <a href="#">@Model.Name</a>
                 </h4>
@@ -31,7 +30,7 @@
                 {
                     <text>&nbsp;</text>
                 }
-                <p> @Model.PreparingSteps</p>
+                <p>@Model.PreparingSteps</p>
             </div>
         </div>
         <div id="rating-result" class="alert" style="display: none"></div>
@@ -64,7 +63,6 @@
 @section scripts {
     @Scripts.Render("~/bundles/jqueryval")
     @Scripts.Render("~/bundles/jqueryUnobtrusiveAjax")
-    @Scripts.Render("~/bundles/raty")
 
     <script>
         var antiForgery = $('#rating-block input[name="__RequestVerificationToken"] ').val();

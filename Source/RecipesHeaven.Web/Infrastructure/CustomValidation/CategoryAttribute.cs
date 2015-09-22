@@ -16,10 +16,10 @@
                 return new ValidationResult("Invalid category");
             }
 
-            var categoryServices = (ICategoryService) DependencyResolver.Current
-                .GetService(typeof(ICategoryService));
-
-            var posibleCategories = categoryServices.GetAllCategories().Select(c => c.Name);
+            //TODO: refactor hidden dependecy ICategoryService
+            var categoryService = DependencyResolver.Current.GetService<ICategoryService>();
+            
+            var posibleCategories = categoryService.GetAllCategories().Select(c => c.Name);
             if (!posibleCategories.Contains(valueAsString))
             {
                 return new ValidationResult("Category doesn't exist");

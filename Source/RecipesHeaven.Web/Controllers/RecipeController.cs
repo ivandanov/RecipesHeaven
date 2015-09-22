@@ -25,11 +25,13 @@
         private const int DefaultNewestRecipesCount = 9;
         private IRecipeService recipeService;
         private ICommentService commentsServices;
+        private ICategoryService categoryService;
 
-        public RecipeController(IRecipeService recipeService, ICommentService commentsServices)
+        public RecipeController(IRecipeService recipeService, ICommentService commentsServices, ICategoryService categoryService)
         {
             this.recipeService = recipeService;
             this.commentsServices = commentsServices;
+            this.categoryService = categoryService;
         }
 
         public ActionResult Recipe(int id, bool isCreated = false)
@@ -139,8 +141,7 @@
         [NonAction]
         public IList<string> GetPosibleCategories()
         {
-            var categoryService = DependencyResolver.Current.GetService<ICategoryService>();
-            var posibleCategories = categoryService
+            var posibleCategories = this.categoryService
                 .GetAllCategories()
                 .Select(c => c.Name)
                 .ToList();

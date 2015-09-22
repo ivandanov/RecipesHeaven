@@ -12,8 +12,15 @@
     using RecipesHeaven.Models;
     using System.Web;
 
-    public class RatingController : Controller
+    public class RatingController : BaseController
     {
+        private IRatingService ratingService;
+
+        public RatingController(IRatingService ratingService)
+        {
+            this.ratingService = ratingService;
+        }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult LikeRecipe(RecipeRatingViewModel model)
@@ -23,12 +30,11 @@
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            var ratingService = DependencyResolver.Current.GetService<IRatingService>();
             var userId = this.User.Identity.GetUserId();
             Like like = null;
             try
             {
-                like = ratingService.RateRecipe(model.RecipeId, userId, model.RatedValue);
+                like = this.ratingService.RateRecipe(model.RecipeId, userId, model.RatedValue);
             }
             catch (RecipesHeavenException ex)
             {
