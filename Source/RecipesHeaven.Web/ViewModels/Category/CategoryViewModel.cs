@@ -6,6 +6,7 @@ using System.Web;
 using RecipesHeaven.Models;
 using AutoMapper;
 using RecipesHeaven.Web.ViewModels.Recipe;
+using AutoMapper.Configuration;
 
 namespace RecipesHeaven.Web.ViewModels.Category
 {
@@ -24,10 +25,11 @@ namespace RecipesHeaven.Web.ViewModels.Category
 
         public ICollection<RecipeOverviewModel> Recipes { get; set; }
 
-        public void CreateMappings(IConfiguration configuration)
+        public void CreateMappings()
         {
-            configuration.CreateMap<Models.Category, CategoryViewModel>()
-                .ForMember(vm => vm.NumberRecipes, op => op.MapFrom(mc => mc.Recipes.Count()));
+            //Mapper
+            //    .Initialize(cfg => cfg.CreateMap<Models.Category, CategoryViewModel>()
+            //    .ForMember(vm => vm.NumberRecipes, op => op.MapFrom(mc => mc.Recipes.Count())));
         }
     }
 }

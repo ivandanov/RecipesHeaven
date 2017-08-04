@@ -10,12 +10,8 @@
     {
         public GenericRepository(DbContext context)
         {
-            if (context == null)
-            {
-                throw new ArgumentException("An instance of DbContext is required to use this repository.", "context");
-            }
-
-            this.Context = context;
+            this.Context = context ?? 
+                throw new ArgumentNullException("context", "An instance of DbContext is required to use this repository.");
             this.DbSet = this.Context.Set<T>();
         }
 

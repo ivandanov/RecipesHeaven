@@ -34,8 +34,7 @@
         {
             var categories = categoryService.GetAllCategories()
                 .AsQueryable()
-                .Project()
-                .To<CategoryViewModel>()
+                .ProjectTo<CategoryViewModel>()
                 .ToList();
 
             return PartialView("_Categories", categories);

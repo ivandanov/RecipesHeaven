@@ -22,7 +22,7 @@
         {
             this.categoryServices = categoryServices;
         }
-        
+
         public Recipe GetRecipeById(int id)
         {
             return this.Data.Recipes.GetById(id);
@@ -46,14 +46,14 @@
         public Recipe Create(string name, string authorId, string category, string preparingSteps, IEnumerable<string> products, string imgUrl)
         {
             var categoryEntity = categoryServices.GetCategoryByName(category);
-            if(categoryEntity == null)
+            if (categoryEntity == null)
             {
                 throw new RecipesHeavenException(
                     string.Format("\"{0}\" category doesn't exist", category));
             }
 
             var isNameFree = this.GetRecipeByName(name) == null;
-            if(!isNameFree)
+            if (!isNameFree)
             {
                 throw new RecipesHeavenException(
                     "There is already a recipe with this name. Please check it before post your recipe");
@@ -129,7 +129,7 @@
             //    recipe => productsIds.All(p => recipe.Products.Select(pr => pr.Id).Contains(p));
 
             var query = from recipes in this.Data.Recipes.All()
-                        where productsIds.All(id => 
+                        where productsIds.All(id =>
                             recipes.Products.Select(pr => pr.Id).Contains(id))
                         select recipes;
 

@@ -43,6 +43,7 @@
             catch (Exception)
             {
                 //TODO: log4net log error
+                return new HttpStatusCodeResult(HttpStatusCode.InternalServerError);
             }
 
             if (like != null)

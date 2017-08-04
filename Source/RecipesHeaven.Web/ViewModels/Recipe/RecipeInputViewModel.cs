@@ -5,6 +5,7 @@
 
     using RecipesHeaven.Web.Infrastructure.CustomValidation;
     using RecipesHeaven.Web.ViewModels.Product;
+    using System.Web.Mvc;
 
     public class RecipeInputViewModel : BaseViewModel
     {
@@ -21,7 +22,7 @@
         [Required]
         [Category]
         public string Category { get; set; }
-
+        
         public IList<string> PossibleCategories { get; set; }
 
         public IList<ProductInputViewModel> Products { get; set; }

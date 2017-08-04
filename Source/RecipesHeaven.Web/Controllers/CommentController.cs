@@ -24,6 +24,7 @@
             this.recipeService = recipeService;
         }
 
+        [HandleError(ExceptionType = typeof(NullReferenceException))]
         [HttpPost]
         [Authorize]
         [ValidateAntiForgeryToken]
@@ -34,32 +35,35 @@
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest, "No data received");
             }
 
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
-                var userId = this.User.Identity.GetUserId();
-                try
-                {
-                    var recipe = recipeService.GetRecipeById(model.RecipeId);
-                    if (recipe != null)
-                    {
-                        var comment = commentService.PostComment(recipe.Id, userId, model.Comment);
-                        var commentViewModel = Mapper.Map<Comment, CommentViewModel>(comment);
-                        return PartialView("_SingleCommentPartial", commentViewModel);
-                    }
-                    else
-                    {
-                        return new HttpStatusCodeResult(HttpStatusCode.NotFound, "Recipe not found");
-                    }
-                }
-                catch (Exception)
-                {
-                    //TODO: log4net log
-                    return new HttpStatusCodeResult(HttpStatusCode.InternalServerError, 
-                        "There was an error while saving your comment. Please try again later.");
-                }
+                //HttpStatusCode.BadRequest, "Your comment has bad format");
+                //this.Response.StatusCode = (int) HttpStatusCode.BadRequest;
+                return PartialView("_CommentInputPartial", model);
             }
 
-            return new HttpStatusCodeResult(HttpStatusCode.BadRequest, "Your comment has bad format");
+            var userId = this.User.Identity.GetUserId();
+            try
+            {
+                var recipe = recipeService.GetRecipeById(model.RecipeId);
+                if (recipe != null)
+                {
+                    var comment = commentService.PostComment(recipe.Id, userId, model.Comment);
+                    var commentViewModel = Mapper.Map<Comment, CommentViewModel>(comment);
+                    return PartialView("_SingleCommentPartial", commentViewModel);
+                }
+                else
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.NotFound, "Recipe not found");
+                }
+            }
+            catch (Exception)
+            {
+                //TODO: log4net log
+                return new HttpStatusCodeResult(HttpStatusCode.InternalServerError,
+                    "There was an error while saving your comment. Please try again later.");
+            }
+
         }
 
         public ActionResult GetCommentsByRecipeId()

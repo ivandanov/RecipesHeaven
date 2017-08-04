@@ -6,6 +6,7 @@ using Microsoft.Owin.Security.Cookies;
 using Owin;
 using RecipesHeaven.Data;
 using RecipesHeaven.Models;
+using Microsoft.Owin.Security.Facebook;
 
 namespace RecipesHeaven.Web
 {
@@ -34,7 +35,7 @@ namespace RecipesHeaven.Web
                         validateInterval: TimeSpan.FromMinutes(30),
                         regenerateIdentity: (manager, user) => user.GenerateUserIdentityAsync(manager))
                 }
-            });            
+            });
             app.UseExternalSignInCookie(DefaultAuthenticationTypes.ExternalCookie);
 
             // Enables the application to temporarily store user information when they are verifying the second factor in the two-factor authentication process.
@@ -54,9 +55,11 @@ namespace RecipesHeaven.Web
             //   consumerKey: "",
             //   consumerSecret: "");
 
-            //app.UseFacebookAuthentication(
-            //   appId: "",
-            //   appSecret: "");
+            app.UseFacebookAuthentication(new FacebookAuthenticationOptions() { 
+               AppId = "852226058261045",
+               AppSecret = "119b59646b05c5e25ab27085dc00235d",
+               Scope = { "email" }
+            });
 
             //app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
             //{

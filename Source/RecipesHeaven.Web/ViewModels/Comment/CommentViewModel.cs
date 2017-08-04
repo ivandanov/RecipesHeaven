@@ -1,6 +1,7 @@
 ﻿namespace RecipesHeaven.Web.ViewModels.Comment
 {
     using AutoMapper;
+    using AutoMapper.Configuration;
     using RecipesHeaven.Web.Infrastructure.Mapping;
 
     public class CommentViewModel : BaseViewModel, IMapFrom<Models.Comment>, IHaveCustomMappings
@@ -15,11 +16,11 @@
 
         public int RecipeId { get; set; }
 
-        public void CreateMappings(IConfiguration configuration)
+        public void CreateMappings()
         {
-            configuration.CreateMap<Models.Comment, CommentViewModel>()
-                .ForMember(vm => vm.AuthorId, op => op.MapFrom(r => r.Author.Id))
-                .ForMember(vm => vm.AuthorName, op => op.MapFrom(r => r.Author.UserName));
+            //Mapper.Initialize(cfg => cfg.CreateMap<Models.Comment, CommentViewModel>()
+            //    .ForMember(vm => vm.AuthorId, op => op.MapFrom(r => r.Author.Id))
+            //    .ForMember(vm => vm.AuthorName, op => op.MapFrom(r => r.Author.UserName)));
         }
     }
 }

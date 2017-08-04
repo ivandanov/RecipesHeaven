@@ -1,7 +1,7 @@
 ﻿namespace RecipesHeaven.Web.Controllers
 {
-    using System;
-    using System.Net;
+    using System; 
+    using System.Web;
     using System.Linq;
     using System.Web.Mvc;
     using System.Collections.Generic;
@@ -9,16 +9,12 @@
     using AutoMapper;
     using AutoMapper.QueryableExtensions;
     using Microsoft.AspNet.Identity;
-
-    using RecipesHeaven.Data.Contracts;
+     
     using RecipesHeaven.Services.Contracts;
     using RecipesHeaven.Web.ViewModels.Recipe;
-    using RecipesHeaven.Models;
-    using RecipesHeaven.Web.ViewModels.Comment;
-    using RecipesHeaven.Web.ViewModels.Product;
-    using System.Web;
+    using RecipesHeaven.Models; 
     using RecipesHeaven.Web.Infrastructure.ImageProcessing;
-    using RecipesHeaven.Common;
+    using RecipesHeaven.Common; 
 
     public class RecipeController : BaseController
     {
@@ -33,7 +29,6 @@
             this.commentsServices = commentsServices;
             this.categoryService = categoryService;
         }
-
         public ActionResult Recipe(int id, bool isCreated = false)
         {
             var recipe = recipeService.GetRecipeById(id);
@@ -44,10 +39,10 @@
             }
 
             var recipeModel = Mapper.Map<RecipeViewModel>(recipe);
-            
+
             var userId = this.User.Identity.GetUserId();
             recipeModel.IsCurrentUserRatedThis = recipe.Rating.Any(l => l.UserId == userId);
-            
+
             return View("RecipeDetails", recipeModel);
         }
 
@@ -97,25 +92,26 @@
 
             var userId = this.User.Identity.GetUserId();
             var products = model.Products.Select(m => m.Content);
+            Recipe newRecipe = null;
             try
             {
-                var newRecipe = this.recipeService
+                newRecipe = this.recipeService
                     .Create(model.Name, userId, model.Category, model.PreparingSteps, products, imageName);
-
-                return RedirectToAction("Recipe", new { id = newRecipe.Id, isCreated = true });
             }
             catch (RecipesHeavenException ex)
             {
                 this.ModelState.AddModelError("DataError", ex.Message);
+                return View(model);
             }
             catch (Exception)
             {
                 //TODO: log4net log error
-                this.ModelState.AddModelError("DataError", 
+                this.ModelState.AddModelError("DataError",
                     "There was an error while saving your recipe. Please try again later.");
+                return View(model);
             }
 
-            return View(model);
+            return RedirectToAction("Recipe", new { id = newRecipe.Id, isCreated = true });
         }
 
 
@@ -124,7 +120,7 @@
         {
             var userId = this.User.Identity.GetUserId();
             var userRecipes = recipeService.GetRecipesFromUser(userId)
-                .AsQueryable().Project().To<RecipeViewModel>().ToList();
+                .AsQueryable().ProjectTo<RecipeViewModel>().ToList();
 
             return View("UserRecipes", userRecipes);
         }
@@ -133,7 +129,7 @@
         public ActionResult NewestRecipes(int count = DefaultNewestRecipesCount)
         {
             var recipes = this.recipeService.GetNewestRecipes(count)
-                .AsQueryable().Project().To<RecipeOverviewModel>().ToList();
+                .AsQueryable().ProjectTo<RecipeOverviewModel>().ToList();
 
             return PartialView("_NewestRecipes", recipes);
         }

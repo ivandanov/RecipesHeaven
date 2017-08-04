@@ -1,5 +1,5 @@
 ﻿namespace RecipesHeaven.Web
-{    
+{
     using System.Data.Entity;
     using System.Web;
     using System.Web.Mvc;
@@ -21,6 +21,11 @@
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
+        }
+
+        protected void Application_Error()
+        {
+
         }
     }
 }
